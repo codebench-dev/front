@@ -3,20 +3,19 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Dashboard from './components/Dashboard';
 import Login from './components/Login';
-import useToken from './useToken';
+import PrivateRoute from './components/PrivateRoute';
+import useToken from './utils/useToken';
 
 function App() {
-  const { token, setToken } = useToken();
+  const { setToken } = useToken();
 
-  if (!token) {
-    return <Login setToken={setToken} />;
-  }
   return (
     <div className="wrapper">
       <BrowserRouter>
         <Switch>
-          <Route path="/dashboard">
-            <Dashboard />
+          <PrivateRoute path="/dashboard" component={Dashboard}></PrivateRoute>
+          <Route>
+            <Login setToken={setToken} />
           </Route>
         </Switch>
       </BrowserRouter>

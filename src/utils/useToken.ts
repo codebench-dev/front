@@ -8,13 +8,13 @@ export default function useToken() {
     }
   }
 
-  function saveToken(userToken: string) {
+  function setToken(userToken: string) {
     localStorage.setItem('access_token', userToken);
   }
   const [token] = useState(getToken());
 
   return {
-    setToken: saveToken,
+    setToken,
     token,
   };
 }

@@ -1,26 +1,26 @@
 import { LockClosedIcon } from '@heroicons/react/solid';
-import axios, { AxiosResponse } from 'axios';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import login from '../api/auth';
 
 interface LayoutProps {
   setToken: any;
 }
 
 const Login: React.FC<LayoutProps> = ({ setToken }) => {
+  const history = useHistory();
   const loginUser = async (event: any) => {
     event.preventDefault();
 
-    const res: AxiosResponse<{ access_token: string }> = await axios.post(
-      'http://localhost:3000/auth/login',
-      {
-        username: event.target.username.value,
-        password: event.target.password.value,
-      }
+    const token = login(
+      event.target.username.value,
+      event.target.password.value
     );
 
-    // localStorage.setItem('access_token', res.data.access_token);
-    setToken(res.data.access_token);
+    setToken(token);
+    history.push('/dashboard');
   };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -34,7 +34,7 @@ const Login: React.FC<LayoutProps> = ({ setToken }) => {
             Sign in to your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Or start your 14-day free trial
+            Welcome back to CodeBench
           </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={loginUser}>
