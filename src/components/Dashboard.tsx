@@ -1,5 +1,6 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
+import Editor from '@monaco-editor/react';
 import { Fragment } from 'react';
 
 const navigation = ['Dashboard', 'Team', 'Projects', 'Calendar', 'Reports'];
@@ -10,6 +11,9 @@ function classNames(...classes: any[]) {
 }
 
 export default function Example() {
+  // function showValue() {
+  //   alert(editorRef.current.getValue());
+  // }
   return (
     <div>
       <Disclosure as="nav" className="bg-gray-800">
@@ -194,7 +198,19 @@ export default function Example() {
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           {/* Replace with your content */}
           <div className="px-4 py-6 sm:px-0">
-            <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
+            <div className="border-4 border-dashed border-gray-200 rounded-lg h-96">
+              {/* <button onClick={showValue}>Show value</button> */}
+              <Editor
+                height="90vh"
+                defaultLanguage="python"
+                defaultValue={`def _clip_grad(clr, grad, group_grad_clip):
+    if group_grad_clip > 0:
+        norm = grad.norm(2).item()
+        if norm > group_grad_clip:
+            clr *= group_grad_clip / (norm + 1e-10)
+    return clr`}
+              />
+            </div>
           </div>
           {/* /End replace */}
         </div>
