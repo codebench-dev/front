@@ -1,8 +1,8 @@
 import { LockClosedIcon } from '@heroicons/react/solid';
-import 'tailwindcss/tailwind.css';
+import './App.css';
 
-export default function Home() {
-  const loginUser = async (event) => {
+function App() {
+  const loginUser = async (event: any) => {
     event.preventDefault();
 
     const res = await fetch('http://localhost:3000/auth/login', {
@@ -17,8 +17,8 @@ export default function Home() {
     });
 
     const result = await res.json();
+    console.log(result);
   };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -32,13 +32,7 @@ export default function Home() {
             Sign in to your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Or{' '}
-            <a
-              href="#"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
-            >
-              start your 14-day free trial
-            </a>
+            Or start your 14-day free trial
           </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={loginUser}>
@@ -90,14 +84,7 @@ export default function Home() {
               </label>
             </div>
 
-            <div className="text-sm">
-              <a
-                href="#"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Forgot your password?
-              </a>
-            </div>
+            <div className="text-sm">Forgot your password?</div>
           </div>
 
           <div>
@@ -119,3 +106,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default App;
