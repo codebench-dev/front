@@ -1,22 +1,24 @@
 import { LockClosedIcon } from '@heroicons/react/solid';
-import 'tailwindcss/tailwind.css';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import login from '../api/auth';
 
-export default function Home() {
-  const loginUser = async (event) => {
+interface LayoutProps {
+  setToken: any;
+}
+
+const Login: React.FC<LayoutProps> = ({ setToken }) => {
+  const history = useHistory();
+  const loginUser = async (event: any) => {
     event.preventDefault();
 
-    const res = await fetch('http://localhost:3000/auth/login', {
-      body: JSON.stringify({
-        username: event.target.username.value,
-        password: event.target.password.value,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    });
+    const token = login(
+      event.target.username.value,
+      event.target.password.value
+    );
 
-    const result = await res.json();
+    setToken(token);
+    history.push('/dashboard');
   };
 
   return (
@@ -32,13 +34,7 @@ export default function Home() {
             Sign in to your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Or{' '}
-            <a
-              href="#"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
-            >
-              start your 14-day free trial
-            </a>
+            Welcome back to CodeBench
           </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={loginUser}>
@@ -90,14 +86,7 @@ export default function Home() {
               </label>
             </div>
 
-            <div className="text-sm">
-              <a
-                href="#"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Forgot your password?
-              </a>
-            </div>
+            <div className="text-sm">Forgot your password?</div>
           </div>
 
           <div>
@@ -118,4 +107,6 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+
+export default Login;
