@@ -1,108 +1,25 @@
-import { LockClosedIcon } from '@heroicons/react/solid';
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
+import Dashboard from './components/Dashboard';
+import Login from './components/Login';
+import useToken from './useToken';
 
 function App() {
-  const loginUser = async (event: any) => {
-    event.preventDefault();
+  const { token, setToken } = useToken();
 
-    const res = await fetch('http://localhost:3000/auth/login', {
-      body: JSON.stringify({
-        username: event.target.username.value,
-        password: event.target.password.value,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    });
-
-    const result = await res.json();
-    console.log(result);
-  };
+  if (!token) {
+    return <Login setToken={setToken} />;
+  }
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <img
-            className="mx-auto h-12 w-auto"
-            src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-            alt="Workflow"
-          />
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign in to your account
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Or start your 14-day free trial
-          </p>
-        </div>
-        <form className="mt-8 space-y-6" onSubmit={loginUser}>
-          <input type="hidden" name="remember" defaultValue="true" />
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="username" className="sr-only">
-                Username
-              </label>
-              <input
-                id="username"
-                name="text"
-                type="text"
-                autoComplete="text"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Username"
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
-              />
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember_me"
-                name="remember_me"
-                type="checkbox"
-                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-              />
-              <label
-                htmlFor="remember_me"
-                className="ml-2 block text-sm text-gray-900"
-              >
-                Remember me
-              </label>
-            </div>
-
-            <div className="text-sm">Forgot your password?</div>
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                <LockClosedIcon
-                  className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                  aria-hidden="true"
-                />
-              </span>
-              Sign in
-            </button>
-          </div>
-        </form>
-      </div>
+    <div className="wrapper">
+      <BrowserRouter>
+        <Switch>
+          <Route path="/dashboard">
+            <Dashboard />
+          </Route>
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }
