@@ -12,7 +12,7 @@ const Login: React.FC<LayoutProps> = ({ setToken }) => {
   const loginUser = async (event: any) => {
     event.preventDefault();
 
-    const token = login(
+    const token = await login(
       event.target.username.value,
       event.target.password.value
     );
