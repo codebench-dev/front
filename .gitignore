@@ -1,2 +1,5 @@
 node_modules
 build/
+.idea
+package-lock.json
+package-lock.json.old
