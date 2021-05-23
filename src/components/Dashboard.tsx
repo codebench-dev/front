@@ -1,7 +1,10 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import Editor from '@monaco-editor/react';
-import { Fragment } from 'react';
+import axios, { AxiosResponse } from 'axios';
+import { Fragment, useRef, useState } from 'react';
+import useToken from '../utils/useToken';
+import Result from './Result';
 
 const navigation = ['Dashboard', 'Team', 'Projects', 'Calendar', 'Reports'];
 const profile = ['Your Profile', 'Settings', 'Sign out'];
@@ -11,9 +14,55 @@ function classNames(...classes: any[]) {
 }
 
 export default function Example() {
-  // function showValue() {
-  //   alert(editorRef.current.getValue());
-  // }
+  const editorRef: any = useRef<null>(null);
+  const [jobID, setJobID] = useState('');
+  const [status, setStatus] = useState('');
+  const [output, setOutput] = useState('');
+  const { token } = useToken();
+
+  function handleEditorDidMount(editor: any, monaco: any) {
+    editorRef.current = editor;
+  }
+
+  async function getJobStatus(id: string, timer: NodeJS.Timeout) {
+    const res: AxiosResponse<{ status: string; output: string }> =
+      await axios.get(`http://localhost:3000/submissions/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    setStatus(res.data.status);
+    setOutput(res.data.output);
+    if (res.data.status === 'completed') {
+      clearInterval(timer);
+    }
+  }
+
+  async function showValue() {
+    if (editorRef) {
+      const res: AxiosResponse<{ id: string }> = await axios.post(
+        'http://localhost:3000/submissions',
+        {
+          language: 'cpython3',
+          code: editorRef.current.getValue(),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setJobID(res.data.id);
+      console.log(res.data.id);
+      console.log(jobID);
+
+      const timer = setInterval(() => {
+        getJobStatus(res.data.id, timer);
+      }, 500);
+    }
+  }
+
   return (
     <div>
       <Disclosure as="nav" className="bg-gray-800">
@@ -199,20 +248,22 @@ export default function Example() {
           {/* Replace with your content */}
           <div className="px-4 py-6 sm:px-0">
             <div className="border-4 border-dashed border-gray-200 rounded-lg h-96">
-              {/* <button onClick={showValue}>Show value</button> */}
               <Editor
-                height="90vh"
+                onMount={handleEditorDidMount}
+                height="30vh"
                 defaultLanguage="python"
-                defaultValue={`def _clip_grad(clr, grad, group_grad_clip):
-    if group_grad_clip > 0:
-        norm = grad.norm(2).item()
-        if norm > group_grad_clip:
-            clr *= group_grad_clip / (norm + 1e-10)
-    return clr`}
+                defaultValue={`print('hey!')`}
               />
             </div>
           </div>
           {/* /End replace */}
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={showValue}
+          >
+            Run code
+          </button>
+          <Result status={status} output={output}></Result>
         </div>
       </main>
     </div>
