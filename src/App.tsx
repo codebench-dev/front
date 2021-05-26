@@ -4,6 +4,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import { Benchmarks } from './components/benchmarks/Benchmarks';
+import { CreateBenchmark } from './components/benchmarks/CreateBenchmark';
 import Dashboard from './components/Dashboard';
 import Header from './components/Header';
 import Login from './components/Login';
@@ -26,9 +27,8 @@ function App() {
               component={Dashboard}
             ></PrivateRoute>
             {/*<PrivateRoute path="/benchmarks" component={Benchmarks}></PrivateRoute>*/}
-            <Route path="/benchmarks">
-              <Benchmarks />
-            </Route>
+            <Route path="/benchmarks/create" component={CreateBenchmark} />
+            <Route path="/benchmarks" component={Benchmarks} />
             <Route>
               <Login setToken={setToken} />
             </Route>

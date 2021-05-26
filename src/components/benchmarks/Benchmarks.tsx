@@ -1,27 +1,12 @@
 import React from "react";
-import axios from "axios";
-
-type benchmarkModel = {
-    id: String,
-    title: String,
-    subject: String,
-    gitUrl: null,
-    createdAt: String,
-    difficulty: String,
-    creator: {
-        id: String,
-        name: String,
-        username: String,
-        email: String,
-        createdAt: String,
-        updatedAt: String
-    }
-}
+import { createBrowserHistory as history} from 'history';
+import {BenchmarkServices} from "../../api/BenchmarkServices";
 
 // @ts-ignore
 function BenchmarkRow({benchmark}) {
-    let difficultyEasyColor = "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
-    let difficultyHardColor = "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+    let difficultyEasyColor   = "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+    let difficultyMediumColor = "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800"
+    let difficultyHardColor   = "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
     return <tr key={benchmark.id}>
         <td className="px-6 py-4 whitespace-nowrap">
             <div className="flex items-center">
@@ -45,7 +30,7 @@ function BenchmarkRow({benchmark}) {
         </td>
         <td className="px-6 py-4 whitespace-nowrap">
                 <span key={benchmark.difficulty}
-                      className={benchmark.difficulty === 'Hard' ? difficultyHardColor : difficultyEasyColor}>
+                      className={benchmark.difficulty === 'Hard' ? difficultyHardColor : benchmark.difficulty === 'Medium' ? difficultyMediumColor : difficultyEasyColor}>
                     {benchmark.difficulty}
                 </span>
         </td>
@@ -71,25 +56,29 @@ export class Benchmarks extends React.Component<{}, { benchmarksJson: benchmarkM
     }
 
     onLoadData() {
-        try {
-            axios.get('http://localhost:3000/benchmarks').then(response => {
-                this.setState({benchmarksJson: response.data})
-
-            });
-        } catch (e) {
-            console.log(e)
-        }
+        BenchmarkServices.getAllBenchmarks().then(response => {
+            this.setState({benchmarksJson: response})
+        });
     }
 
     componentDidMount() {
         this.onLoadData();
     }
 
+    navigateToBenchCreation() {
+        history().push('/benchmarks/create')
+    }
+
     render() {
         return <>
             <header className="bg-white shadow">
-                <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between" >
                     <h1 className="text-3xl font-bold text-gray-900">Benchmarks</h1>
+                    {/*<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">*/}
+
+                    <button onClick={() => this.navigateToBenchCreation()} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                        Create
+                    </button>
                 </div>
             </header>
             <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
