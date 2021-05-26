@@ -6,7 +6,7 @@ const login = async (username: string, password: string): Promise<string> => {
     {
       username,
       password,
-    }
+    },
   );
 
   return res.data.access_token;
