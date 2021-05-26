@@ -4,7 +4,7 @@ import Editor from '@monaco-editor/react';
 import axios, { AxiosResponse } from 'axios';
 import { Fragment, useRef, useState } from 'react';
 import Gravatar from 'react-gravatar';
-import { useQuery } from 'react-query';
+import useProfile from '../api/users';
 import useToken from '../utils/useToken';
 import Result from './Result';
 
@@ -21,18 +21,8 @@ export default function Example() {
   const [status, setStatus] = useState('');
   const [output, setOutput] = useState('');
   const { token } = useToken();
-  const { isLoading, isError, data, error } = useQuery<
-    { email: string },
-    Error
-  >('profile', () =>
-    axios
-      .get('http://localhost:3000/users/stan', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => res.data)
-  );
+
+  const { isLoading, isError, data, error } = useProfile();
 
   if (isLoading) {
     return <span>Loading...</span>;
@@ -43,8 +33,6 @@ export default function Example() {
       return <span>Error: {error.message}</span>;
     }
   }
-
-  console.log(data);
 
   function handleEditorDidMount(editor: any, monaco: any) {
     editorRef.current = editor;
@@ -76,7 +64,7 @@ export default function Example() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       setJobID(res.data.id);
@@ -125,7 +113,7 @@ export default function Example() {
                           >
                             {item}
                           </a>
-                        )
+                        ),
                       )}
                     </div>
                   </div>
@@ -171,7 +159,7 @@ export default function Example() {
                                       href="/"
                                       className={classNames(
                                         active ? 'bg-gray-100' : '',
-                                        'block px-4 py-2 text-sm text-gray-700'
+                                        'block px-4 py-2 text-sm text-gray-700',
                                       )}
                                     >
                                       {item}
@@ -221,7 +209,7 @@ export default function Example() {
                     >
                       {item}
                     </a>
-                  )
+                  ),
                 )}
               </div>
               <div className="pt-4 pb-3 border-t border-gray-700">
