@@ -1,11 +1,10 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import Editor from '@monaco-editor/react';
-import axios, { AxiosResponse } from 'axios';
-import { Fragment, useRef, useState } from 'react';
+import React, { Fragment, useRef } from 'react';
 import Gravatar from 'react-gravatar';
+import useProcessInterval from '../api/submissions';
 import useProfile from '../api/users';
-import useToken from '../utils/useToken';
 import Result from './Result';
 
 const navigation = ['Dashboard', 'Team', 'Projects', 'Calendar', 'Reports'];
@@ -16,64 +15,45 @@ function classNames(...classes: any[]) {
 }
 
 export default function Example() {
+  // Get monaco instance to access code later
   const editorRef: any = useRef<null>(null);
-  const [jobID, setJobID] = useState('');
-  const [status, setStatus] = useState('');
-  const [output, setOutput] = useState('');
-  const { token } = useToken();
-
-  const { isLoading, isError, data, error } = useProfile();
-
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
-
-  if (isError) {
-    if (error) {
-      return <span>Error: {error.message}</span>;
-    }
-  }
-
   function handleEditorDidMount(editor: any, monaco: any) {
     editorRef.current = editor;
   }
 
-  async function getJobStatus(id: string, timer: NodeJS.Timeout) {
-    const res: AxiosResponse<{ status: string; output: string }> =
-      await axios.get(`http://localhost:3000/submissions/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    setStatus(res.data.status);
-    setOutput(res.data.output);
-    if (res.data.status === 'completed') {
-      clearInterval(timer);
-    }
+  // Handle code submission and job result polling
+  const {
+    mutate,
+    data: jobData,
+    isLoading: isProcessing,
+  } = useProcessInterval({
+    onSuccess: (data: any) => console.log('Process finished', data),
+    onError: (err: any) => console.log('Error with process', err),
+  });
+
+  let result;
+  if (isProcessing) {
+    result = 'Processing...';
+  }
+  if (jobData) {
+    result = <Result status={jobData.status} output={jobData.output}></Result>;
   }
 
-  async function showValue() {
-    if (editorRef) {
-      const res: AxiosResponse<{ id: string }> = await axios.post(
-        'http://localhost:3000/submissions',
-        {
-          language: 'cpython3',
-          code: editorRef.current.getValue(),
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+  // Get Profile
+  const {
+    isLoading: isProfileLoading,
+    isError: isProfileError,
+    data: profileData,
+    error,
+  } = useProfile();
 
-      setJobID(res.data.id);
-      console.log(res.data.id);
-      console.log(jobID);
+  if (isProfileLoading) {
+    return <span>Loading...</span>;
+  }
 
-      const timer = setInterval(() => {
-        getJobStatus(res.data.id, timer);
-      }, 500);
+  if (isProfileError) {
+    if (error) {
+      return <span>Error: {error.message}</span>;
     }
   }
 
@@ -133,7 +113,7 @@ export default function Example() {
                             <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                               <span className="sr-only">Open user menu</span>
                               <Gravatar
-                                email={data?.email}
+                                email={profileData?.email}
                                 className="h-8 w-8 rounded-full"
                               />
                             </Menu.Button>
@@ -272,11 +252,14 @@ export default function Example() {
           {/* /End replace */}
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={showValue}
+            onClick={() => {
+              mutate(editorRef.current.getValue());
+            }}
           >
             Run code
           </button>
-          <Result status={status} output={output}></Result>
+
+          {result && result}
         </div>
       </main>
     </div>
