@@ -3,6 +3,8 @@ import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import Editor from '@monaco-editor/react';
 import axios, { AxiosResponse } from 'axios';
 import { Fragment, useRef, useState } from 'react';
+import Gravatar from 'react-gravatar';
+import { useQuery } from 'react-query';
 import useToken from '../utils/useToken';
 import Result from './Result';
 
@@ -19,6 +21,30 @@ export default function Example() {
   const [status, setStatus] = useState('');
   const [output, setOutput] = useState('');
   const { token } = useToken();
+  const { isLoading, isError, data, error } = useQuery<
+    { email: string },
+    Error
+  >('profile', () =>
+    axios
+      .get('http://localhost:3000/users/stan', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => res.data)
+  );
+
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (isError) {
+    if (error) {
+      return <span>Error: {error.message}</span>;
+    }
+  }
+
+  console.log(data);
 
   function handleEditorDidMount(editor: any, monaco: any) {
     editorRef.current = editor;
@@ -118,10 +144,9 @@ export default function Example() {
                           <div>
                             <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                               <span className="sr-only">Open user menu</span>
-                              <img
+                              <Gravatar
+                                email={data?.email}
                                 className="h-8 w-8 rounded-full"
-                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                alt=""
                               />
                             </Menu.Button>
                           </div>

@@ -1,4 +1,6 @@
 import React from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Dashboard from './components/Dashboard';
@@ -9,16 +11,24 @@ import useToken from './utils/useToken';
 function App() {
   const { setToken } = useToken();
 
+  const queryClient = new QueryClient();
+
   return (
     <div className="wrapper">
-      <BrowserRouter>
-        <Switch>
-          <PrivateRoute path="/dashboard" component={Dashboard}></PrivateRoute>
-          <Route>
-            <Login setToken={setToken} />
-          </Route>
-        </Switch>
-      </BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Switch>
+            <PrivateRoute
+              path="/dashboard"
+              component={Dashboard}
+            ></PrivateRoute>
+            <Route>
+              <Login setToken={setToken} />
+            </Route>
+          </Switch>
+        </BrowserRouter>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </div>
   );
 }
