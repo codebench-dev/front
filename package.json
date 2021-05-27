@@ -38,6 +38,9 @@
     "prettier": "2.3.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.2"
   },
+  "optionalDependencies": {
+    "fsevents": "*"
+  },
   "scripts": {
     "start": "craco start",
     "build": "craco build",
