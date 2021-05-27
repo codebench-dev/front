@@ -1,6 +1,6 @@
 import React from "react";
-import { createBrowserHistory as history} from 'history';
 import {BenchmarkServices} from "../../api/BenchmarkServices";
+import { Link } from "react-router-dom";
 
 // @ts-ignore
 function BenchmarkRow({benchmark}) {
@@ -38,13 +38,10 @@ function BenchmarkRow({benchmark}) {
             {benchmark.creator.name}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-            {/*<a href="#" className="text-indigo-600 hover:text-indigo-900">View</a>*/}
             <button className="text-indigo-600 hover:text-indigo-900"  disabled>View</button>
-            {/*<a className="text-indigo-600 hover:text-indigo-900">View</a>*/}
         </td>
     </tr>
 }
-
 
 export class Benchmarks extends React.Component<{}, { benchmarksJson: benchmarkModel[] }> {
 
@@ -65,20 +62,12 @@ export class Benchmarks extends React.Component<{}, { benchmarksJson: benchmarkM
         this.onLoadData();
     }
 
-    navigateToBenchCreation() {
-        history().push('/benchmarks/create')
-    }
-
     render() {
         return <>
             <header className="bg-white shadow">
                 <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between" >
                     <h1 className="text-3xl font-bold text-gray-900">Benchmarks</h1>
-                    {/*<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">*/}
-
-                    <button onClick={() => this.navigateToBenchCreation()} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                        Create
-                    </button>
+                    <Link className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" to="/benchmarks/create">Create</Link>
                 </div>
             </header>
             <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
