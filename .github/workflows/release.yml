@@ -1,0 +1,24 @@
+name: deploy
+
+on:
+  release:
+    type: [published]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 16.x
+      - run: npm install
+      - run: npm run build
+      - name: install mc
+        run: curl -O https://dl.min.io/client/mc/release/linux-amd64/mc && chmod +x mc
+      - name: configure mc
+        run: './mc config host add scw https://s3.fr-par.scw.cloud  ${{ secrets.SCW_ACCESS_KEY }} ${{ secrets.SCW_SECRET_KEY }} --api S3v4'
+      - name: deploy to object storage
+        run: ./mc mirror --overwrite --remove --disable-multipart build/ scw/codebench/
