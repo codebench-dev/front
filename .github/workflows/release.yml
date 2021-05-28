@@ -2,7 +2,7 @@ name: deploy
 
 on:
   release:
-    type: [published]
+    type: [created]
 
 jobs:
   porter-deploy:
@@ -27,6 +27,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: rg.fr-par.scw.cloud/beanz/api:${{ steps.get_tag.outputs.tag }}
+          tags: |
+            rg.fr-par.scw.cloud/codebench/front:${{ steps.get_tag.outputs.tag }}
+            rg.fr-par.scw.cloud/codebench/front:latest
       - name: Deploy on Porter
         run: curl -X POST "https://dashboard.getporter.dev/api/webhooks/deploy/${{secrets.PORTER_WEBHOOK}}?commit=${{ steps.get_tag.outputs.tag }}"
