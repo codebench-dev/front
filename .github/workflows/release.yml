@@ -2,7 +2,7 @@ name: Release workflow
 
 on:
   release:
-    type: [released]
+    types: [created]
 
 jobs:
   porter-deploy:
