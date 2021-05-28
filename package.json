@@ -42,7 +42,7 @@
     "fsevents": "*"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "PORT=3001 craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
