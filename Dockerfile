@@ -1,5 +1,9 @@
 FROM node:16-alpine as build-step
 
+ARG REACT_APP_API_ENDPOINT
+
+ENV REACT_APP_API_ENDPOINT $REACT_APP_API_ENDPOINT
+
 RUN mkdir /app
 WORKDIR /app
 COPY package.json /app
