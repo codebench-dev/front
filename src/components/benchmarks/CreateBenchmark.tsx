@@ -1,6 +1,7 @@
 import React from "react";
 import {BenchmarkServices} from "../../api/BenchmarkServices";
 import {Link} from "react-router-dom";
+import Label from "../../utils/Label";
 
 export class CreateBenchmark extends React.Component<{}, { state: String, message: String }> {
     constructor(props: {} | Readonly<{}>) {
@@ -83,21 +84,7 @@ export class CreateBenchmark extends React.Component<{}, { state: String, messag
                         </div>
                     </div>
                     <div className="text-center pb-3">
-                        {(() => {
-                            if (this.state.state !== '') {
-                                if (this.state.state === 'Error') {
-                                    return <div className="inline-flex items-center bg-white leading-none text-red-600 rounded-full p-2 shadow text-teal text-sm">
-                                        <span className="inline-flex bg-red-600 text-white rounded-full h-6 px-3 justify-center items-center">{this.state.state}</span>
-                                        <span className="inline-flex px-2">{this.state.message}</span>
-                                    </div>
-                                } else if (this.state.state === 'Success') {
-                                    return <div className="inline-flex items-center bg-white leading-none text-green-600 rounded-full p-2 shadow text-teal text-sm">
-                                        <span className="inline-flex bg-green-600 text-white rounded-full h-6 px-3 justify-center items-center">{this.state.state}</span>
-                                        <span className="inline-flex px-2">{this.state.message}</span>
-                                    </div>
-                                }
-                            }
-                        })()}
+                        <Label status={this.state.state} message={this.state.message}/>
                     </div>
                     <div className="flex flex-col bg-grey-light">
                         <input type="submit" value="Create"
