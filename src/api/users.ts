@@ -6,11 +6,14 @@ function useProfile() {
   const { token } = useToken();
 
   return useQuery<{ email: string }, Error>('profile', async () => {
-    const { data } = await axios.get('http://localhost:3000/users/stan', {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_API_ENDPOINT}/users/stan`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    });
+    );
     return data;
   });
 }

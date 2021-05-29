@@ -16,17 +16,20 @@ function useProcessInterval({
 
   // 1: Handle code submission
   async function createJob(code: string) {
-    const response = await fetch('http://localhost:3000/submissions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+    const response = await fetch(
+      `${process.env.REACT_APP_API_ENDPOINT}/submissions`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          language: 'cpython3',
+          code: code,
+        }),
       },
-      body: JSON.stringify({
-        language: 'cpython3',
-        code: code,
-      }),
-    });
+    );
     return await response.json();
   }
 
@@ -50,11 +53,14 @@ function useProcessInterval({
     ['processProgress', token, processId],
     async () => {
       const res: AxiosResponse<{ status: string; output: string }> =
-        await axios.get(`http://localhost:3000/submissions/${processId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
+        await axios.get(
+          `${process.env.REACT_APP_API_ENDPOINT}/submissions/${processId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           },
-        });
+        );
       return res.data;
     },
     {

@@ -9,7 +9,7 @@ export class BenchmarkServices {
     difficulty: string,
   ): Promise<benchmarkModel> {
     const res: AxiosResponse<benchmarkModel> = await axios.post(
-      'http://localhost:3000/benchmarks',
+      `${process.env.REACT_APP_API_ENDPOINT}/benchmarks`,
       {
         title,
         subject,
@@ -26,14 +26,16 @@ export class BenchmarkServices {
   }
 
   static async getAllBenchmarks(): Promise<benchmarkModel[]> {
-    return axios.get('http://localhost:3000/benchmarks').then((response) => {
-      return response.data;
-    });
+    return axios
+      .get(`${process.env.REACT_APP_API_ENDPOINT}/benchmarks`)
+      .then((response) => {
+        return response.data;
+      });
   }
 
   static async getBenchmarkById(id: string): Promise<benchmarkModel> {
     return axios
-      .get('http://localhost:3000/benchmarks/' + id)
+      .get(`${process.env.REACT_APP_API_ENDPOINT}/benchmarks/${id}`)
       .then((response) => {
         return response.data;
       });
