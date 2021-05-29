@@ -7,6 +7,8 @@ function BenchmarkRow({benchmark}) {
     let difficultyEasyColor   = "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
     let difficultyMediumColor = "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800"
     let difficultyHardColor   = "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+    const truncateSize = 80;
+
     return <tr key={benchmark.id}>
         <td className="px-6 py-4 whitespace-nowrap">
             <div className="flex items-center">
@@ -26,7 +28,7 @@ function BenchmarkRow({benchmark}) {
             </div>
         </td>
         <td className="px-6 py-4 whitespace-nowrap">
-            <div key={benchmark.subject} className="text-sm text-gray-900">{benchmark.subject}</div>
+            <div key={benchmark.subject.substring(0, 50)} className="text-sm text-gray-900">{(benchmark.subject.length > truncateSize) ? benchmark.subject.substring(0, truncateSize) + '...' : benchmark.subject }</div>
         </td>
         <td className="px-6 py-4 whitespace-nowrap">
                 <span key={benchmark.difficulty}
@@ -38,7 +40,7 @@ function BenchmarkRow({benchmark}) {
             {benchmark.creator.name}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-            <button className="text-indigo-600 hover:text-indigo-900"  disabled>View</button>
+            <Link className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" to={"/benchmarks/"+ benchmark.id} >See</Link>
         </td>
     </tr>
 }

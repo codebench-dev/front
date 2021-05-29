@@ -3,12 +3,13 @@ import {BenchmarkServices} from "../../api/BenchmarkServices";
 import {Link} from "react-router-dom";
 import Label from "../../utils/Label";
 
-export class CreateBenchmark extends React.Component<{}, { state: String, message: String }> {
+export class CreateBenchmark extends React.Component<{}, { state: String, message: String, id: String }> {
     constructor(props: {} | Readonly<{}>) {
         super(props);
         this.state = {
             state: '',
             message: '',
+            id: '',
         }
         this.onSubmit = this.onSubmit.bind(this);
     }
@@ -23,6 +24,7 @@ export class CreateBenchmark extends React.Component<{}, { state: String, messag
             // console.log('At least one field is blank')
             this.setState({message: 'At least one field is blank'});
             this.setState({state: 'Error'});
+            this.setState({id: ""});
             return;
         }
 
@@ -33,6 +35,7 @@ export class CreateBenchmark extends React.Component<{}, { state: String, messag
         ).then(r => {
             this.setState({message: 'Your benchmark'+ r.title +' have been saved'});
             this.setState({state: 'Success'});
+            this.setState({id: r.id});
         })
 
     }
@@ -94,7 +97,7 @@ export class CreateBenchmark extends React.Component<{}, { state: String, messag
                         <Link className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full" to="/benchmarks">Back to benchmarks</Link>
                         {(() => {
                            if (this.state.state === 'Success') {
-                               return <Link className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" to="">See my benchmark</Link>
+                               return <Link className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" to={"/benchmarks/" + this.state.id}>See my benchmark</Link>
                            }
                         })()}
                     </div>

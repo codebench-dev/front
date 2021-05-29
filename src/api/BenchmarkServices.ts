@@ -26,4 +26,10 @@ export class BenchmarkServices {
         });
     }
 
+    static async getBenchmarkById(id: string): Promise<benchmarkModel> {
+        return axios.get('http://localhost:3000/benchmarks/'+ id).then(response => {
+            return response.data;
+        });
+    }
+
 }

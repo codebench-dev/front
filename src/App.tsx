@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
+import BenchmarkDetail from './components/benchmarks/BenchmarkDetail';
 import { Benchmarks } from './components/benchmarks/Benchmarks';
 import { CreateBenchmark } from './components/benchmarks/CreateBenchmark';
 import Dashboard from './components/Dashboard';
@@ -29,6 +30,7 @@ function App() {
             {/*<PrivateRoute path="/benchmarks" component={Benchmarks}></PrivateRoute>*/}
             <Route path="/benchmarks/create" component={CreateBenchmark} />
             <Route path="/benchmarks" component={Benchmarks} />
+            <Route path="/benchmarks/:id" component={BenchmarkDetail} />
             <Route>
               <Login setToken={setToken} />
             </Route>
