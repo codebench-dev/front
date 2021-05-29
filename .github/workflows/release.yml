@@ -23,11 +23,11 @@ jobs:
           registry: rg.fr-par.scw.cloud/codebench
           username: nologin
           password: ${{ secrets.SCW_SECRET_KEY }}
-          build-args: REACT_APP_API_ENDPOINT=https://api.codebench.dev
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
           push: true
+          build-args: REACT_APP_API_ENDPOINT=https://api.codebench.dev
           tags: |
             rg.fr-par.scw.cloud/codebench/front:${{ steps.get_tag.outputs.tag }}
             rg.fr-par.scw.cloud/codebench/front:latest
