@@ -29,8 +29,8 @@ function App() {
             ></PrivateRoute>
             {/*<PrivateRoute path="/benchmarks" component={Benchmarks}></PrivateRoute>*/}
             <Route path="/benchmarks/create" component={CreateBenchmark} />
-            <Route path="/benchmarks" component={Benchmarks} />
             <Route path="/benchmarks/:id" component={BenchmarkDetail} />
+            <Route path="/benchmarks" component={Benchmarks} />
             <Route>
               <Login setToken={setToken} />
             </Route>
