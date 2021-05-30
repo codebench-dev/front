@@ -26,8 +26,6 @@ export default function Navbar() {
   const logOut = (event: any) => {
     event.preventDefault();
 
-    console.log('called');
-
     setToken('');
     history.push('/');
   };
