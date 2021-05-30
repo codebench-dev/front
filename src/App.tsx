@@ -28,7 +28,7 @@ function App() {
             <PrivateRoute
               path="/dashboard"
               component={Dashboard}
-            ></PrivateRoute>
+            />
             <PrivateRoute exact path="/benchmarks" component={Benchmarks} />
             <PrivateRoute
               exact
