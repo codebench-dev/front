@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { BenchmarkServices } from '../../api/BenchmarkServices';
 import Label from '../../utils/Label';
+import Header from '../Header';
+import Page from '../Page';
 
 export class CreateBenchmark extends React.Component<
   {},
@@ -42,7 +44,8 @@ export class CreateBenchmark extends React.Component<
 
   render() {
     return (
-      <>
+      <Page>
+        <Header title="Dashboard" />
         <header className="bg-white shadow">
           <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between">
             <h1 className="text-3xl font-bold text-gray-900">
@@ -133,7 +136,7 @@ export class CreateBenchmark extends React.Component<
             </div>
           </form>
         </div>
-      </>
+      </Page>
     );
   }
 }
