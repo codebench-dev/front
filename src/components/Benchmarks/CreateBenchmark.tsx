@@ -45,14 +45,7 @@ export class CreateBenchmark extends React.Component<
   render() {
     return (
       <Page>
-        <Header title="Dashboard" />
-        <header className="bg-white shadow">
-          <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between">
-            <h1 className="text-3xl font-bold text-gray-900">
-              Create benchmark
-            </h1>
-          </div>
-        </header>
+        <Header title="Create benchmark" />
         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
           <form className="w-full max-w-lg" onSubmit={this.onSubmit}>
             <div className="flex flex-wrap -mx-3 mb-6">

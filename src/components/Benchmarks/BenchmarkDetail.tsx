@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { BenchmarkServices } from '../../api/BenchmarkServices';
 import Header from '../Page/Header';
 import Page from '../Page/Page';
@@ -27,29 +27,17 @@ const BenchmarkDetail = (props) => {
       });
   }, [setBenchmark, props.match.params.id]);
 
-  if (benchmark === '') {
+  if (benchmark === ''|| undefined) {
     return <Redirect to="/404" />;
   }
 
   return (
     <Page>
-      <Header title="Dashboard" />
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between">
-          <h1 className="text-3xl font-bold text-gray-900">
-            {
-              // @ts-ignore
-              benchmark === undefined ? '' : benchmark.title
-            }
-          </h1>
-          <Link
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-            to="/benchmarks"
-          >
-            Back
-          </Link>
-        </div>
-      </header>
+      <Header title={
+          // @ts-ignore
+          benchmark === undefined ? '' : benchmark.title}
+              button='Back' navTo='/benchmarks'
+      />
       <div className="flex p-4">
         <div className="flex-1 mx-auto border-4 border-dashed border-gray-200 rounded-lg h-96">
           <div className="pl-8 pr-8">

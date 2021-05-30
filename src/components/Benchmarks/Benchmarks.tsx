@@ -103,7 +103,7 @@ export class Benchmarks extends React.Component<
   render() {
     return (
       <Page>
-        <Header title="Benchmarks" />
+        <Header title="Benchmarks" button="Create" navTo="/benchmarks/create"/>
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="flex flex-col">
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
