@@ -2,7 +2,8 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import React, { Fragment } from 'react';
 import Gravatar from 'react-gravatar';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import useToken from '../../hooks/token';
 import useProfile from '../../hooks/users';
 
 const navigation = [
@@ -14,11 +15,23 @@ const navigation = [
 ];
 const profile = ['Your Profile', 'Settings', 'Sign out'];
 
-function classNames(...classes: any[]) {
-  return classes.filter(Boolean).join(' ');
-}
+// function classNames(...classes: any[]) {
+//   return classes.filter(Boolean).join(' ');
+// }
 
 export default function Navbar() {
+  const { setToken } = useToken();
+  const history = useHistory();
+
+  const logOut = (event: any) => {
+    event.preventDefault();
+
+    console.log('called');
+
+    setToken('');
+    history.push('/');
+  };
+
   // Get Profile
   const {
     isLoading: isProfileLoading,
@@ -67,6 +80,7 @@ export default function Navbar() {
                           //     </Fragment>
                           // ) : (
                           <Link
+                            key={item}
                             to={'/' + item.toLowerCase()}
                             className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                           >
@@ -112,7 +126,7 @@ export default function Navbar() {
                               static
                               className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                             >
-                              {profile.map((item) => (
+                              {/* {profile.map((item) => (
                                 <Menu.Item key={item}>
                                   {({ active }) => (
                                     <a
@@ -126,7 +140,17 @@ export default function Navbar() {
                                     </a>
                                   )}
                                 </Menu.Item>
-                              ))}
+                              ))} */}
+                              <Menu.Item key="logout">
+                                <button
+                                  className={
+                                    'block px-4 py-2 text-sm text-gray-700'
+                                  }
+                                  onClick={logOut}
+                                >
+                                  Log out
+                                </button>
+                              </Menu.Item>
                             </Menu.Items>
                           </Transition>
                         </>
