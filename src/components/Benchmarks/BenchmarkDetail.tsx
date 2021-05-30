@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { BenchmarkServices } from '../../api/BenchmarkServices';
-import Header from '../Header';
-import Page from '../Page';
+import Header from '../Page/Header';
+import Page from '../Page/Page';
 
 // @ts-ignore
 const BenchmarkDetail = (props) => {

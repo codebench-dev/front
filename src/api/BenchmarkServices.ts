@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import benchmarkModel from '../components/benchmarks/BenchmarkModel';
+import benchmarkModel from '../components/Benchmarks/BenchmarkModel';
 // import useToken from "../utils/useToken";
 
 export class BenchmarkServices {

@@ -5,7 +5,7 @@ import {
   RouteComponentProps,
   RouteProps,
 } from 'react-router-dom';
-import useToken from '../utils/useToken';
+import useToken from '../../hooks/token';
 
 interface PrivateRouteProps extends RouteProps {
   component:
