@@ -2,19 +2,21 @@ import { LockClosedIcon } from '@heroicons/react/solid';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import login from '../api/auth';
+import useToken from '../utils/useToken';
 
-interface LayoutProps {
-  setToken: any;
-}
-
-const Login: React.FC<LayoutProps> = ({ setToken }) => {
+const Login: React.FC = () => {
   const history = useHistory();
+  const { token, setToken } = useToken();
+
+  if (token) {
+    history.push('/dashboard');
+  }
   const loginUser = async (event: any) => {
     event.preventDefault();
 
     const token = await login(
       event.target.username.value,
-      event.target.password.value
+      event.target.password.value,
     );
 
     setToken(token);
