@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { BenchmarkServices } from '../../api/BenchmarkServices';
-import Label from '../../utils/Label';
-import Header from '../Header';
-import Page from '../Page';
+import Label from '../utils/Label';
+import Header from '../Page/Header';
+import Page from '../Page/Page';
 
 export class CreateBenchmark extends React.Component<
   {},

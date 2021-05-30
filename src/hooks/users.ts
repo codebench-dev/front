@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import useToken from '../utils/useToken';
+import useToken from './token';
 
 function useProfile() {
   const { token } = useToken();

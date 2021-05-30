@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
-import useToken from '../utils/useToken';
+import useToken from './token';
 
 function useProcessInterval({
   onSuccess,

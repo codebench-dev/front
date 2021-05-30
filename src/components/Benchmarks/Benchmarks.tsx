@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { BenchmarkServices } from '../../api/BenchmarkServices';
-import Header from '../Header';
-import Page from '../Page';
+import Header from '../Page/Header';
+import Page from '../Page/Page';
 import benchmarkModel from './BenchmarkModel';
 
 // @ts-ignore

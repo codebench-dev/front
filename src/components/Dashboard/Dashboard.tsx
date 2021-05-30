@@ -1,8 +1,8 @@
 import Editor from '@monaco-editor/react';
 import React, { useRef } from 'react';
-import useProcessInterval from '../api/submissions';
-import Header from './Header';
-import Page from './Page';
+import useProcessInterval from '../../hooks/submissions';
+import Header from '../Page/Header';
+import Page from '../Page/Page';
 import Result from './Result';
 
 export default function Example() {
