@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Home: React.FC = () => {
+const Landing: React.FC = () => {
   return (
     <div>
       <section className="text-gray-700 ">
@@ -34,4 +34,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default Landing;

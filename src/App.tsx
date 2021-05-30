@@ -7,7 +7,7 @@ import BenchmarkDetail from './components/benchmarks/BenchmarkDetail';
 import { Benchmarks } from './components/benchmarks/Benchmarks';
 import { CreateBenchmark } from './components/benchmarks/CreateBenchmark';
 import Dashboard from './components/Dashboard';
-import Home from './components/Home';
+import Landing from './components/Landing';
 import Login from './components/Login';
 import PrivateRoute from './components/PrivateRoute';
 
@@ -20,7 +20,7 @@ function App() {
         <BrowserRouter>
           <Switch>
             <Route exact path="/">
-              <Home />
+              <Landing />
             </Route>
             <Route path="/login">
               <Login />
