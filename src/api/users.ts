@@ -5,16 +5,29 @@ import useToken from '../utils/useToken';
 function useProfile() {
   const { token } = useToken();
 
+  function parseJwt(token: string): {
+    username: string;
+    sub: string;
+    iat: string;
+  } {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64));
+  }
+
   return useQuery<{ email: string }, Error>('profile', async () => {
-    const { data } = await axios.get(
-      `${process.env.REACT_APP_API_ENDPOINT}/users/stan`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    if (token) {
+      const username = parseJwt(token).username;
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API_ENDPOINT}/users/${username}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      },
-    );
-    return data;
+      );
+      return data;
+    }
   });
 }
 
