@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { BenchmarkServices } from '../../api/BenchmarkServices';
+import Header from '../Header';
+import Page from '../Page';
 import benchmarkModel from './BenchmarkModel';
 
 // @ts-ignore
@@ -100,18 +102,8 @@ export class Benchmarks extends React.Component<
 
   render() {
     return (
-      <>
-        <header className="bg-white shadow">
-          <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between">
-            <h1 className="text-3xl font-bold text-gray-900">Benchmarks</h1>
-            <Link
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-              to="/benchmarks/create"
-            >
-              Create
-            </Link>
-          </div>
-        </header>
+      <Page>
+        <Header title="Benchmarks" />
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="flex flex-col">
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -164,7 +156,7 @@ export class Benchmarks extends React.Component<
             </div>
           </div>
         </div>
-      </>
+      </Page>
     );
   }
 }

@@ -7,33 +7,35 @@ import BenchmarkDetail from './components/benchmarks/BenchmarkDetail';
 import { Benchmarks } from './components/benchmarks/Benchmarks';
 import { CreateBenchmark } from './components/benchmarks/CreateBenchmark';
 import Dashboard from './components/Dashboard';
-import Header from './components/Header';
+import Home from './components/Home';
 import Login from './components/Login';
 import PrivateRoute from './components/PrivateRoute';
-import useToken from './utils/useToken';
 
 function App() {
-  const { setToken } = useToken();
-
   const queryClient = new QueryClient();
 
   return (
     <div className="wrapper">
       <QueryClientProvider client={queryClient}>
-        <Header />
         <BrowserRouter>
           <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
             <PrivateRoute
               path="/dashboard"
               component={Dashboard}
             ></PrivateRoute>
-            {/*<PrivateRoute path="/benchmarks" component={Benchmarks}></PrivateRoute>*/}
-            <Route path="/benchmarks/create" component={CreateBenchmark} />
-            <Route path="/benchmarks/:id" component={BenchmarkDetail} />
-            <Route path="/benchmarks" component={Benchmarks} />
-            <Route>
-              <Login setToken={setToken} />
-            </Route>
+            <PrivateRoute exact path="/benchmarks" component={Benchmarks} />
+            <PrivateRoute
+              exact
+              path="/benchmarks/create"
+              component={CreateBenchmark}
+            />
+            <PrivateRoute path="/benchmarks/:id" component={BenchmarkDetail} />
           </Switch>
         </BrowserRouter>
         <ReactQueryDevtools initialIsOpen={false} />
