@@ -21,12 +21,16 @@ const Landing: React.FC = () => {
             </p>
           </div>
           <div className="flex justify-left lg:justify-center ">
-            <button className="px-6 py-2 font-semibold text-white transition duration-500 ease-in-out transform rounded-lg bg-black hover:bg-gray-800 hover:to-black focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">
-              <Link to="/login">Login</Link>
-            </button>
-            <button className="px-6 py-2 ml-4 font-semibold text-black transition duration-500 ease-in-out transform border rounded-lg shadow-xl hover:bg-wickedgray-300 hover:text-white focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">
-              <Link to="/login">Sign up</Link>
-            </button>
+            <Link to="/login">
+              <button className="px-6 py-2 font-semibold text-white transition duration-500 ease-in-out transform rounded-lg bg-black hover:bg-gray-800 hover:to-black focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">
+                Login
+              </button>
+            </Link>
+            <Link to="/login">
+              <button className="px-6 py-2 ml-4 font-semibold text-black transition duration-500 ease-in-out transform border rounded-lg shadow-xl hover:bg-wickedgray-300 hover:text-white focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">
+                Sign up
+              </button>
+            </Link>
           </div>
         </div>
       </section>
