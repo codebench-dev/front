@@ -1,7 +1,7 @@
 import { LockClosedIcon } from '@heroicons/react/solid';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import login from '../api/auth';
+import { login } from '../api/auth';
 import useToken from '../hooks/token';
 
 const Login: React.FC = () => {

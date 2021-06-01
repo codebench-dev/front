@@ -12,4 +12,30 @@ const login = async (username: string, password: string): Promise<string> => {
   return res.data.access_token;
 };
 
-export default login;
+const register = async (
+  name: string,
+  email: string,
+  username: string,
+  password: string,
+): Promise<{
+  name: string;
+  email: string;
+  username: string;
+  id: string;
+}> => {
+  const res: AxiosResponse<{
+    name: string;
+    email: string;
+    username: string;
+    id: string;
+  }> = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/users`, {
+    name,
+    email,
+    username,
+    password,
+  });
+
+  return res.data;
+};
+
+export { login, register };

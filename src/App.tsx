@@ -9,6 +9,7 @@ import { CreateBenchmark } from './components/Benchmarks/CreateBenchmark';
 import Dashboard from './components/Dashboard/Dashboard';
 import Landing from './components/Landing';
 import Login from './components/Login';
+import Register from './components/Register';
 import PrivateRoute from './components/Routing/PrivateRoute';
 
 function App() {
@@ -25,10 +26,10 @@ function App() {
             <Route path="/login">
               <Login />
             </Route>
-            <PrivateRoute
-              path="/dashboard"
-              component={Dashboard}
-            />
+            <Route path="/register">
+              <Register />
+            </Route>
+            <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute exact path="/benchmarks" component={Benchmarks} />
             <PrivateRoute
               exact

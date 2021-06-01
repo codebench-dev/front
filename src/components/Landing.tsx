@@ -26,7 +26,7 @@ const Landing: React.FC = () => {
                 Login
               </button>
             </Link>
-            <Link to="/login">
+            <Link to="/register">
               <button className="px-6 py-2 ml-4 font-semibold text-black transition duration-500 ease-in-out transform border rounded-lg shadow-xl hover:bg-wickedgray-300 hover:text-white focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">
                 Sign up
               </button>
