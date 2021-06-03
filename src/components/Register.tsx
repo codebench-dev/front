@@ -17,7 +17,7 @@ const Register: React.FC = () => {
   const registerUser = async (event: any) => {
     event.preventDefault();
 
-    if (event.target.password !== event.target.passwordConfirmed){
+    if (event.target.password.value !== event.target.passwordConfirmed.value){
       // @ts-ignore
       setMessage("Passwords doesn't match" );
       // @ts-ignore
