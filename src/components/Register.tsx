@@ -1,17 +1,29 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import React, {useState} from 'react';
+import {Link, useHistory } from 'react-router-dom';
 import { register } from '../api/auth';
 import useToken from '../hooks/token';
+import Label from "./utils/Label";
 
 const Register: React.FC = () => {
   const history = useHistory();
   const { token, setToken } = useToken();
+  const [status, setStatus] = useState();
+  const [message, setMessage] = useState();
+
 
   if (token) {
     history.push('/dashboard');
   }
   const registerUser = async (event: any) => {
     event.preventDefault();
+
+    if (event.target.password !== event.target.passwordConfirmed){
+      // @ts-ignore
+      setMessage("Passwords doesn't match" );
+      // @ts-ignore
+      setStatus('Error');
+      return
+    }
 
     await register(
       event.target.name.value,
@@ -24,7 +36,7 @@ const Register: React.FC = () => {
   };
 
   return (
-    <section className="flex flex-col items-center h-screen md:flex-row">
+    <section className="flex min-h-screen flex-col items-center h-screen md:flex-row">
       <div className="container mx-auto">
         <div className="flex justify-center px-2 py-6 ">
           <div className="flex w-full rounded-lg xl:w-3/4 lg:w-11/12 lg:shadow-xl ">
@@ -41,6 +53,7 @@ const Register: React.FC = () => {
                       id="name"
                       placeholder="Your name "
                       className="w-full px-4 py-2 mt-2 text-base transition duration-500 ease-in-out transform border-transparent rounded-lg bg-blueGray-100 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ext-black focus:border-blueGray-500"
+                      required={true}
                     />
                   </div>
                   <div>
@@ -53,6 +66,7 @@ const Register: React.FC = () => {
                       id="username"
                       placeholder="Your Username "
                       className="w-full px-4 py-2 mt-2 text-base transition duration-500 ease-in-out transform border-transparent rounded-lg bg-blueGray-100 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ext-black focus:border-blueGray-500"
+                      required={true}
                     />
                   </div>
                   <div className="mt-4">
@@ -81,14 +95,29 @@ const Register: React.FC = () => {
                       <input
                         className="block w-full px-4 py-2 mt-2 text-base text-black transition duration-500 ease-in-out transform border-transparent rounded-lg bg-blueGray-100 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ext-black focus:border-blueGray-500"
                         id="password"
-                        type="text"
+                        type="password"
                         placeholder="Your Password"
+                        required={true}
                       />
-                      {/* <p className="mt-1 text-xs italic text-black">
-                        Please fill out this field.
-                      </p> */}
+                    </div>
+                    <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                      <label
+                          className="text-base font-medium leading-relaxed text-blueGray-700"
+                          htmlFor="password"
+                      >
+                        {' '}
+                        Confirm password{' '}
+                      </label>
+                      <input
+                          className="block w-full px-4 py-2 mt-2 text-base text-black transition duration-500 ease-in-out transform border-transparent rounded-lg bg-blueGray-100 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ext-black focus:border-blueGray-500"
+                          id="passwordConfirmed"
+                          type="password"
+                          placeholder="Confirm Your Password"
+                          required={true}
+                      />
                     </div>
                   </div>
+                  <Label status={status} message={message}/>
                   <button
                     type="submit"
                     className="block w-full px-4 py-3 mt-6 font-semibold text-white transition duration-500 ease-in-out transform rounded-lg bg-gradient-to-r from-black hover:from-black to-black focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 hover:to-black"
@@ -98,15 +127,15 @@ const Register: React.FC = () => {
                 </form>
                 <p className="mt-8 text-center">
                   Already have an account?{' '}
-                  <a
-                    href="#"
-                    className="font-semibold text-black hover:text-black"
-                  >
-                    Sign In
-                  </a>
+                  <Link
+                      className="font-semibold text-black hover:text-black"
+                      to="/login"
+                  >Sign In
+                  </Link>
                 </p>
               </div>
             </div>
+            <img className="rounded" src="https://images2.imgbox.com/ab/88/aS4VAVYc_o.png" alt="Codebench logo"/>
           </div>
         </div>
       </div>
