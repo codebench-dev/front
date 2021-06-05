@@ -6,7 +6,11 @@ const Landing: React.FC = () => {
     <div>
       <section className="text-gray-700 ">
         <div className="container flex flex-col px-5 py-24 mx-auto lg:items-center">
-          <img className="rounded-full w-1/6" src="https://images2.imgbox.com/ab/88/aS4VAVYc_o.png" alt="Codebench logo"/>
+          <img
+            className="rounded-full place-self-center mb-8 w-1/6"
+            src="https://images2.imgbox.com/ab/88/aS4VAVYc_o.png"
+            alt="Codebench logo"
+          />
           <div className="flex flex-col w-full mb-12 text-left lg:text-center">
             <h2 className="mb-4 text-xs font-semibold tracking-widest text-black uppercase title-font">
               Get up to speed...
