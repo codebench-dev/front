@@ -57,8 +57,8 @@ export default function Navbar() {
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
                     <img
-                      className="h-8 w-8"
-                      src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+                      className="rounded-full h-12 w-12"
+                      src="https://images2.imgbox.com/ab/88/aS4VAVYc_o.png"
                       alt="Workflow"
                     />
                   </div>
