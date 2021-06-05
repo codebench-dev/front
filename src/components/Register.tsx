@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Link, useHistory } from 'react-router-dom';
-import { register } from '../api/auth';
+import {login, register} from '../api/auth';
 import useToken from '../hooks/token';
 import Label from "./utils/Label";
 
@@ -25,14 +25,33 @@ const Register: React.FC = () => {
       return
     }
 
+    let errorOnRegister: boolean = false
     await register(
       event.target.name.value,
       event.target.email.value,
       event.target.username.value,
       event.target.password.value,
+    ).catch(event => {
+      if (event.response.status === 409) {
+        errorOnRegister = true
+      }
+    });
+
+    if (errorOnRegister) {
+      // @ts-ignore
+      setMessage("Email or username already taken" );
+      // @ts-ignore
+      setStatus('Error');
+      return
+    }
+
+    const token = await login(
+        event.target.username.value,
+        event.target.password.value,
     );
 
-    history.push('/login');
+    setToken(token);
+    history.push('/dashboard');
   };
 
   return (
@@ -135,7 +154,9 @@ const Register: React.FC = () => {
                 </p>
               </div>
             </div>
-            <img className="rounded" src="https://images2.imgbox.com/ab/88/aS4VAVYc_o.png" alt="Codebench logo"/>
+            <Link to="/">
+              <img className="rounded" src="https://images2.imgbox.com/ab/88/aS4VAVYc_o.png" alt="Codebench logo"/>
+            </Link>
           </div>
         </div>
       </div>
