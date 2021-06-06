@@ -9,6 +9,10 @@ import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import useBenchmarkDetail from '../../hooks/benchmark';
 
+function classNames(...classes: string[]) {
+  return classes.filter(Boolean).join(' ');
+}
+
 const languages = [
   {
     id: 1,
@@ -37,7 +41,6 @@ type BenchmarkDetailParams = {
 const BenchmarkDetail = ({
   match,
 }: RouteComponentProps<BenchmarkDetailParams>) => {
-  // const [benchmark, setBenchmark] = useState<BenchmarkModel>();
   const [selected, setSelected] = useState(languages[0]);
 
   //Get monaco instance to access code later
@@ -81,8 +84,6 @@ const BenchmarkDetail = ({
       return <span>Error: {error.message}</span>;
     }
   }
-
-  console.log(benchmarkData);
 
   return (
     <Page>
@@ -137,12 +138,14 @@ const BenchmarkDetail = ({
                             {languages.map((language) => (
                               <Listbox.Option
                                 key={language.id}
-                                className={({ active }) => {
-                                  return active
-                                    ? 'text-white bg-indigo-600'
-                                    : 'text-gray-900' +
-                                        'cursor-default select-none relative py-2 pl-3 pr-9';
-                                }}
+                                className={({ active }) =>
+                                  classNames(
+                                    active
+                                      ? 'text-white bg-indigo-600'
+                                      : 'text-gray-900',
+                                    'cursor-default select-none relative py-2 pl-3 pr-9',
+                                  )
+                                }
                                 value={language}
                               >
                                 {({ selected, active }) => (
@@ -167,12 +170,12 @@ const BenchmarkDetail = ({
 
                                     {selected ? (
                                       <span
-                                        className={
+                                        className={classNames(
                                           active
                                             ? 'text-white'
-                                            : 'text-indigo-600' +
-                                              'absolute inset-y-0 right-0 flex items-center pr-4'
-                                        }
+                                            : 'text-indigo-600',
+                                          'absolute inset-y-0 right-0 flex items-center pr-4',
+                                        )}
                                       >
                                         <CheckIcon
                                           className="h-5 w-5"
