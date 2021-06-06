@@ -32,12 +32,4 @@ export class BenchmarkServices {
         return response.data;
       });
   }
-
-  static async getBenchmarkById(id: string): Promise<benchmarkModel> {
-    return axios
-      .get(`${process.env.REACT_APP_API_ENDPOINT}/benchmarks/${id}`)
-      .then((response) => {
-        return response.data;
-      });
-  }
 }
