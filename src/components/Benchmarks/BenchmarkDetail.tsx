@@ -1,6 +1,5 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
-import { Redirect } from 'react-router-dom';
-import { BenchmarkServices } from '../../api/BenchmarkServices';
+import React, { Fragment, useRef, useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import Header from '../Page/Header';
 import Page from '../Page/Page';
 import Editor from '@monaco-editor/react';
@@ -8,6 +7,7 @@ import useProcessInterval from '../../hooks/submissions';
 import Result from '../Dashboard/Result';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
+import useBenchmarkDetail from '../../hooks/benchmark';
 
 const languages = [
   {
@@ -30,9 +30,14 @@ const languages = [
   },
 ];
 
-// @ts-ignore
-const BenchmarkDetail = (props) => {
-  const [benchmark, setBenchmark] = useState();
+type BenchmarkDetailParams = {
+  id: string;
+};
+
+const BenchmarkDetail = ({
+  match,
+}: RouteComponentProps<BenchmarkDetailParams>) => {
+  // const [benchmark, setBenchmark] = useState<BenchmarkModel>();
   const [selected, setSelected] = useState(languages[0]);
 
   //Get monaco instance to access code later
@@ -60,36 +65,29 @@ const BenchmarkDetail = (props) => {
     result = <Result status={jobData.status} output={jobData.output} />;
   }
 
-  useEffect(() => {
-    let isMounted = true;
-    BenchmarkServices.getBenchmarkById(props.match.params.id)
-      .then((response) => {
-        if (isMounted) {
-          // @ts-ignore
-          setBenchmark(response);
-        }
-        return () => {
-          isMounted = false;
-        };
-      })
-      .catch((e) => {
-        // @ts-ignore
-        setBenchmark('');
-        console.log('Error : ' + e);
-      });
-  }, [setBenchmark, props.match.params.id]);
+  const {
+    isLoading: isBenchmarkLoading,
+    isError: isBenchmarkError,
+    data: benchmarkData,
+    error,
+  } = useBenchmarkDetail(match.params.id);
 
-  if (benchmark === '' || undefined) {
-    return <Redirect to="/404" />;
+  if (isBenchmarkLoading) {
+    return <span>Loading....</span>;
   }
+
+  if (isBenchmarkError) {
+    if (error) {
+      return <span>Error: {error.message}</span>;
+    }
+  }
+
+  console.log(benchmarkData);
 
   return (
     <Page>
       <Header
-        title={
-          // @ts-ignore
-          benchmark === undefined ? '' : benchmark.title
-        }
+        title={benchmarkData?.title || 'eee'}
         button="Back"
         navTo="/benchmarks"
       />
@@ -194,12 +192,7 @@ const BenchmarkDetail = (props) => {
                 </Listbox>
               </div>
             </div>
-            <p>
-              {
-                // @ts-ignore
-                benchmark === undefined ? '' : benchmark.subject
-              }
-            </p>
+            <p>{benchmarkData?.subject || ''}</p>
           </div>
         </div>
         <div className="grid flex-1">
@@ -216,7 +209,11 @@ const BenchmarkDetail = (props) => {
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 py-2 px-4 rounded"
               onClick={() => {
-                mutate(editorRef.current.getValue());
+                mutate({
+                  code: editorRef.current.getValue(),
+                  benchmarkId:
+                    benchmarkData?.id !== undefined ? benchmarkData.id : '',
+                });
               }}
             >
               Run code

@@ -15,7 +15,13 @@ function useProcessInterval({
   const { token } = useToken();
 
   // 1: Handle code submission
-  async function createJob(code: string) {
+  async function createJob({
+    code,
+    benchmarkId,
+  }: {
+    code: string;
+    benchmarkId: string;
+  }) {
     const response = await fetch(
       `${process.env.REACT_APP_API_ENDPOINT}/submissions`,
       {
@@ -27,6 +33,7 @@ function useProcessInterval({
         body: JSON.stringify({
           language: 'cpython3',
           code: code,
+          benchmarkId: benchmarkId,
         }),
       },
     );

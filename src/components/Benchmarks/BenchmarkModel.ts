@@ -1,18 +1,18 @@
 export default class benchmarkModel {
-  id: String | undefined;
-  title: String | undefined;
-  subject: String | undefined;
+  id: string | undefined;
+  title: string | undefined;
+  subject: string | undefined;
   gitUrl: null | undefined;
-  createdAt: String | undefined;
-  difficulty: String | undefined;
+  createdAt: string | undefined;
+  difficulty: string | undefined;
   creator:
     | {
-        id: String | undefined;
-        name: String | undefined;
-        username: String | undefined;
-        email: String | undefined;
-        createdAt: String | undefined;
-        updatedAt: String | undefined;
+        id: string | undefined;
+        name: string | undefined;
+        username: string | undefined;
+        email: string | undefined;
+        createdAt: string | undefined;
+        updatedAt: string | undefined;
       }
     | undefined;
 }
