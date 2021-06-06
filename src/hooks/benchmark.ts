@@ -16,7 +16,6 @@ export default function useBenchmarkDetail(id: string) {
           },
         },
       );
-      console.log(data);
       return data;
     }
   });
