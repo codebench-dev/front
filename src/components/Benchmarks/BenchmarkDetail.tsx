@@ -3,7 +3,9 @@ import { RouteComponentProps } from 'react-router-dom';
 import Header from '../Page/Header';
 import Page from '../Page/Page';
 import Editor from '@monaco-editor/react';
-import useProcessInterval from '../../hooks/submissions';
+import useProcessInterval, {
+  useLastSubmissionForUser,
+} from '../../hooks/submissions';
 import Result from '../Dashboard/Result';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
@@ -50,6 +52,14 @@ const BenchmarkDetail = ({
     editorRef.current = editor;
   }
 
+  let lastSubmission;
+  const {
+    isLoading: isLastSubmissionLoading,
+    isError: isLastSubmissionError,
+    data: lastSubmissionData,
+    error: errorLastSubmission,
+  } = useLastSubmissionForUser(match.params.id, selected.name);
+
   // Handle code submission and job result polling
   const {
     mutate,
@@ -83,6 +93,19 @@ const BenchmarkDetail = ({
     if (error) {
       return <span>Error: {error.message}</span>;
     }
+  }
+
+  if (isLastSubmissionLoading) {
+    lastSubmission = 'Loading...';
+  }
+
+  if (isLastSubmissionError) {
+    if (errorLastSubmission) {
+      lastSubmission = "print('Welcome to Codebench !')";
+    }
+  }
+  if (lastSubmissionData) {
+    lastSubmission = lastSubmissionData.code;
   }
 
   return (
@@ -203,8 +226,8 @@ const BenchmarkDetail = ({
             <Editor
               onMount={handleEditorDidMount}
               height="100%"
-              defaultLanguage="python"
-              defaultValue={`print('hey!')`}
+              value={lastSubmission && lastSubmission}
+              language={selected.name}
             />
           </div>
           <div className="justify-self-start">{result && result}</div>

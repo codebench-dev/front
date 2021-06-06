@@ -96,3 +96,29 @@ function useProcessInterval({
 }
 
 export default useProcessInterval;
+
+export function useLastSubmissionForUser(
+  benchmarkId: string,
+  language: string,
+) {
+  const { token } = useToken();
+
+  return useQuery<{ code: string }, Error>(`last-submission`, async () => {
+    if (benchmarkId && language) {
+      const { data } = await axios.put(
+        `${process.env.REACT_APP_API_ENDPOINT}/submissions`,
+        {
+          benchmarkId,
+          language,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      // console.log(data);
+      return data;
+    }
+  });
+}
