@@ -1,15 +1,15 @@
+import { Listbox, Transition } from '@headlessui/react';
+import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
+import Editor from '@monaco-editor/react';
 import React, { Fragment, useRef, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import Header from '../Page/Header';
-import Page from '../Page/Page';
-import Editor from '@monaco-editor/react';
+import useBenchmarkDetail from '../../hooks/benchmark';
 import useProcessInterval, {
   useLastSubmissionForUser,
 } from '../../hooks/submissions';
 import Result from '../Dashboard/Result';
-import { Listbox, Transition } from '@headlessui/react';
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
-import useBenchmarkDetail from '../../hooks/benchmark';
+import Header from '../Page/Header';
+import Page from '../Page/Page';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -75,7 +75,13 @@ const BenchmarkDetail = ({
     result = 'Processing...';
   }
   if (jobData) {
-    result = <Result status={jobData.status} output={jobData.output} />;
+    result = (
+      <Result
+        status={jobData.status}
+        stderr={jobData.stderr}
+        stdout={jobData.stdout}
+      />
+    );
   }
 
   const {
