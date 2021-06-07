@@ -65,7 +65,7 @@ function useProcessInterval({
     },
     {
       onSuccess: (data) => {
-        if (data.status === 'completed') {
+        if (data.status === 'done') {
           setIsPollingEnabled(false);
           onSuccess();
         }
