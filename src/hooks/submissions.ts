@@ -107,15 +107,14 @@ export function useLastSubmissionForUser(
     `last-submission-${benchmarkId}-${language}`,
     async () => {
       if (benchmarkId && language) {
-        const { data } = await axios.put(
-          `${process.env.REACT_APP_API_ENDPOINT}/submissions`,
-          {
-            benchmarkId,
-            language,
-          },
+        const { data } = await axios.get(
+          `${process.env.REACT_APP_API_ENDPOINT}/benchmarks/${benchmarkId}/submissions/last`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
+            },
+            params: {
+              language,
             },
           },
         );
