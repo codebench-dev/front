@@ -27,7 +27,13 @@ export default function Example() {
     result = 'Processing...';
   }
   if (jobData) {
-    result = <Result status={jobData.status} output={jobData.output}></Result>;
+    result = (
+      <Result
+        status={jobData.status}
+        stdout={jobData.stdout}
+        stderr={jobData.stderr}
+      ></Result>
+    );
   }
 
   return (
@@ -46,7 +52,8 @@ export default function Example() {
             </div>
           </div>
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            type="button"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition ease-in-out duration-150"
             onClick={() => {
               mutate(editorRef.current.getValue());
             }}
