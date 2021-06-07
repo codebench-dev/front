@@ -104,7 +104,7 @@ export function useLastSubmissionForUser(
   const { token } = useToken();
 
   return useQuery<{ code: string }, Error>(
-    `last-submission`,
+    `last-submission-${benchmarkId}`,
     async () => {
       if (benchmarkId && language) {
         const { data } = await axios.put(
