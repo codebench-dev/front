@@ -103,22 +103,29 @@ export function useLastSubmissionForUser(
 ) {
   const { token } = useToken();
 
-  return useQuery<{ code: string }, Error>(`last-submission`, async () => {
-    if (benchmarkId && language) {
-      const { data } = await axios.put(
-        `${process.env.REACT_APP_API_ENDPOINT}/submissions`,
-        {
-          benchmarkId,
-          language,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+  return useQuery<{ code: string }, Error>(
+    `last-submission`,
+    async () => {
+      if (benchmarkId && language) {
+        const { data } = await axios.put(
+          `${process.env.REACT_APP_API_ENDPOINT}/submissions`,
+          {
+            benchmarkId,
+            language,
           },
-        },
-      );
-      // console.log(data);
-      return data;
-    }
-  });
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        return data;
+      }
+    },
+    {
+      retry: false,
+      refetchOnReconnect: false,
+      refetchOnWindowFocus: false,
+    },
+  );
 }
