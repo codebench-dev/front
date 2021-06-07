@@ -52,15 +52,18 @@ function useProcessInterval({
   const { isLoading, data } = useQuery(
     ['processProgress', token, processId],
     async () => {
-      const res: AxiosResponse<{ status: string; output: string }> =
-        await axios.get(
-          `${process.env.REACT_APP_API_ENDPOINT}/submissions/${processId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+      const res: AxiosResponse<{
+        status: string;
+        stdout: string;
+        stderr: string;
+      }> = await axios.get(
+        `${process.env.REACT_APP_API_ENDPOINT}/submissions/${processId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-        );
+        },
+      );
       return res.data;
     },
     {
