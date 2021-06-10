@@ -20,3 +20,19 @@ export default function useBenchmarkDetail(id: string) {
     }
   });
 }
+
+export function useBenchmarkSList() {
+  const { token } = useToken();
+
+  return useQuery<benchmarkModel[], Error>(`benchmark`, async () => {
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_API_ENDPOINT}/benchmarks`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return data;
+  });
+}

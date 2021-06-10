@@ -24,12 +24,4 @@ export class BenchmarkServices {
     );
     return res.data;
   }
-
-  static async getAllBenchmarks(): Promise<benchmarkModel[]> {
-    return axios
-      .get(`${process.env.REACT_APP_API_ENDPOINT}/benchmarks`)
-      .then((response) => {
-        return response.data;
-      });
-  }
 }
