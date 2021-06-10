@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import benchmarkModel from '../components/Benchmarks/BenchmarkModel';
 import useToken from './token';
 
@@ -35,4 +35,26 @@ export function useBenchmarkSList() {
     );
     return data;
   });
+}
+
+export async function createBenchmark(
+  title: string,
+  subject: string,
+  difficulty: string,
+): Promise<benchmarkModel> {
+  const res: AxiosResponse<benchmarkModel> = await axios.post(
+    `${process.env.REACT_APP_API_ENDPOINT}/benchmarks`,
+    {
+      title,
+      subject,
+      difficulty,
+    },
+    {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+        // 'Authorization': 'Bearer ' + useToken() //
+      },
+    },
+  );
+  return res.data;
 }
