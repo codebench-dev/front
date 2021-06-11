@@ -1,14 +1,28 @@
 import React, { useState } from 'react';
+import { useMutation } from 'react-query';
 import { Link } from 'react-router-dom';
-import Label from '../utils/Label';
+import { createBenchmark } from '../../hooks/benchmark';
 import Header from '../Page/Header';
 import Page from '../Page/Page';
-import { createBenchmark } from '../../hooks/benchmark';
+import Label from '../utils/Label';
+import benchmarkModel from './BenchmarkModel';
 
 const CreateBenchmark: React.FC = () => {
   const [status, setStatus] = useState('');
   const [message, setMessage] = useState('');
   const [id, setId] = useState('');
+
+  const { mutate } = useMutation(createBenchmark, {
+    onSuccess: (data: benchmarkModel) => {
+      setMessage(`Your benchmark ${data.title} has been saved`);
+      setStatus('Success');
+      setId(data.id!);
+    },
+    onError: (err: any) => {
+      setMessage(`Failed to create benchmark: ${err}`);
+      setStatus('Error');
+    },
+  });
 
   const submitBenchmarkCreation = async (event: any) => {
     event.preventDefault();
@@ -19,15 +33,10 @@ const CreateBenchmark: React.FC = () => {
     if (title === '' || subject === '') {
       setMessage('At least one field is blank');
       setStatus('Error');
-      setId('');
       return;
     }
 
-    await createBenchmark(title, subject, difficulty).then((data) => {
-      setMessage('Your benchmark' + data.title + ' have been saved');
-      setStatus('Success');
-      setId(data.id!);
-    });
+    mutate({ title, subject, difficulty });
   };
 
   return (
