@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { login, register } from '../api/auth';
-import useToken from '../hooks/token';
+import { useToken } from '../hooks/token';
 import Label from './utils/Label';
 
 const Register: React.FC = () => {

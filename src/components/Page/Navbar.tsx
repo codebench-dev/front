@@ -3,7 +3,7 @@ import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import React, { Fragment } from 'react';
 import Gravatar from 'react-gravatar';
 import { Link, useHistory } from 'react-router-dom';
-import useToken from '../../hooks/token';
+import { useToken } from '../../hooks/token';
 import useProfile from '../../hooks/users';
 
 const navigation = [
