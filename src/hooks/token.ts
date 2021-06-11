@@ -1,13 +1,14 @@
 import { useState } from 'react';
 
-export default function useToken() {
-  function getToken(): any {
-    const tokenString = localStorage.getItem('access_token');
-    if (tokenString) {
-      return tokenString;
-    }
+function getToken(): string {
+  const tokenString = localStorage.getItem('access_token');
+  if (tokenString) {
+    return tokenString;
   }
+  return ''; // FIX ME
+}
 
+function useToken() {
   function setToken(userToken: string) {
     localStorage.setItem('access_token', userToken);
   }
@@ -18,3 +19,5 @@ export default function useToken() {
     token,
   };
 }
+
+export { getToken, useToken };

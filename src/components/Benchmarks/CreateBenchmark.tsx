@@ -127,7 +127,6 @@ const CreateBenchmark: React.FC = () => {
       </div>
     </Page>
   );
-  // }
 };
 
 export default CreateBenchmark;

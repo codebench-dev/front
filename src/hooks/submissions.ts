@@ -1,7 +1,7 @@
-import axios, { AxiosResponse } from 'axios';
 import { useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
-import useToken from './token';
+import authenticatedRequest from '../components/utils/request';
+import { useToken } from './token';
 
 function useProcessInterval({
   onSuccess,
@@ -22,22 +22,16 @@ function useProcessInterval({
     code: string;
     benchmarkId: string;
   }) {
-    const response = await fetch(
-      `${process.env.REACT_APP_API_ENDPOINT}/submissions`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          language: 'cpython3',
-          code: code,
-          benchmarkId: benchmarkId,
-        }),
+    const { data } = await authenticatedRequest({
+      url: `/submissions`,
+      method: 'POST',
+      data: {
+        language: 'cpython3',
+        code: code,
+        benchmarkId: benchmarkId,
       },
-    );
-    return await response.json();
+    });
+    return data;
   }
 
   const { mutate } = useMutation(createJob, {
@@ -45,12 +39,10 @@ function useProcessInterval({
       setIsPollingEnabled(true);
     },
     onError: (error) => {
-      console.error(error);
       setIsPollingEnabled(false);
       onError();
     },
     onSuccess: (data) => {
-      console.log(data);
       setProcessId(data.id);
     },
   });
@@ -59,19 +51,18 @@ function useProcessInterval({
   const { isLoading, data } = useQuery(
     ['processProgress', token, processId],
     async () => {
-      const res: AxiosResponse<{
-        status: string;
-        stdout: string;
-        stderr: string;
-      }> = await axios.get(
-        `${process.env.REACT_APP_API_ENDPOINT}/submissions/${processId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      return res.data;
+      const {
+        data,
+      }: {
+        data: {
+          status: string;
+          stdout: string;
+          stderr: string;
+        };
+      } = await authenticatedRequest({
+        url: `submissions/${processId}`,
+      });
+      return data;
     },
     {
       onSuccess: (data) => {
@@ -101,23 +92,16 @@ export function useLastSubmissionForUser(
   benchmarkId: string,
   language: string,
 ) {
-  const { token } = useToken();
-
   return useQuery<{ code: string }, Error>(
     `last-submission-${benchmarkId}-${language}`,
     async () => {
       if (benchmarkId && language) {
-        const { data } = await axios.get(
-          `${process.env.REACT_APP_API_ENDPOINT}/benchmarks/${benchmarkId}/submissions/last`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            params: {
-              language,
-            },
+        const { data } = await authenticatedRequest({
+          url: `benchmarks/${benchmarkId}/submissions/last`,
+          params: {
+            language,
           },
-        );
+        });
         return data;
       }
     },

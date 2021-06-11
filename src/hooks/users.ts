@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { useQuery } from 'react-query';
-import useToken from './token';
+import authenticatedRequest from '../components/utils/request';
+import { useToken } from './token';
 
 function useProfile() {
   const { token } = useToken();
@@ -18,14 +18,9 @@ function useProfile() {
   return useQuery<{ email: string }, Error>('profile', async () => {
     if (token) {
       const username = parseJwt(token).username;
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_API_ENDPOINT}/users/${username}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+      const { data } = await authenticatedRequest({
+        url: `users/${username}`,
+      });
       return data;
     }
   });
