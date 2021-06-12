@@ -32,6 +32,7 @@ export default function Example() {
         status={jobData.status}
         stdout={jobData.stdout}
         stderr={jobData.stderr}
+        execDuration={jobData.execDuration}
       ></Result>
     );
   }

@@ -4,9 +4,15 @@ interface LayoutProps {
   status: string;
   stdout?: string;
   stderr?: string;
+  execDuration?: number;
 }
 
-const Result: React.FC<LayoutProps> = ({ status, stdout, stderr }) => {
+const Result: React.FC<LayoutProps> = ({
+  status,
+  stdout,
+  stderr,
+  execDuration,
+}) => {
   return (
     <div>
       <b>Status: </b>
@@ -16,6 +22,8 @@ const Result: React.FC<LayoutProps> = ({ status, stdout, stderr }) => {
       <pre>{stdout}</pre>
       <b>Stderr: </b>
       <pre>{stderr}</pre>
+      <b>Execution duration (milliseconds): </b>
+      <pre>{execDuration}</pre>
     </div>
   );
 };

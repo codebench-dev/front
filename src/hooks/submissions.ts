@@ -58,6 +58,7 @@ function useProcessInterval({
           status: string;
           stdout: string;
           stderr: string;
+          execDuration: number;
         };
       } = await authenticatedRequest({
         url: `submissions/${processId}`,
