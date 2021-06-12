@@ -80,6 +80,7 @@ const BenchmarkDetail = ({
         status={jobData.status}
         stderr={jobData.stderr}
         stdout={jobData.stdout}
+        execDuration={jobData.execDuration}
       />
     );
   }
