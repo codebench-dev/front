@@ -30,7 +30,7 @@ const languages = [
   },
   {
     id: 3,
-    name: 'c++',
+    name: 'cpp',
     avatar:
       'https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg',
   },
@@ -246,6 +246,7 @@ const BenchmarkDetail = ({
                   code: editorRef.current.getValue(),
                   benchmarkId:
                     benchmarkData?.id !== undefined ? benchmarkData.id : '',
+                  language: selected.name,
                 });
               }}
             >

@@ -18,15 +18,17 @@ function useProcessInterval({
   async function createJob({
     code,
     benchmarkId,
+    language,
   }: {
     code: string;
     benchmarkId: string;
+    language: string;
   }) {
     const { data } = await authenticatedRequest({
       url: `/submissions`,
       method: 'POST',
       data: {
-        language: 'cpython3',
+        language: language,
         code: code,
         benchmarkId: benchmarkId,
       },
