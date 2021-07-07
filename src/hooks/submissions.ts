@@ -58,6 +58,8 @@ function useProcessInterval({
       }: {
         data: {
           status: string;
+          message: string;
+          error: string;
           stdout: string;
           stderr: string;
           execDuration: number;

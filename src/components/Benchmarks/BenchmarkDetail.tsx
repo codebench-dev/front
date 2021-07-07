@@ -78,6 +78,8 @@ const BenchmarkDetail = ({
     result = (
       <Result
         status={jobData.status}
+        message={jobData.message}
+        error={jobData.error}
         stderr={jobData.stderr}
         stdout={jobData.stdout}
         execDuration={jobData.execDuration}

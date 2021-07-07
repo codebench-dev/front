@@ -30,6 +30,8 @@ export default function Example() {
     result = (
       <Result
         status={jobData.status}
+        message={jobData.message}
+        error={jobData.error}
         stdout={jobData.stdout}
         stderr={jobData.stderr}
         execDuration={jobData.execDuration}
