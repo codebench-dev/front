@@ -2,6 +2,7 @@ import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import Editor from '@monaco-editor/react';
 import React, { Fragment, useRef, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { RouteComponentProps } from 'react-router-dom';
 import useBenchmarkDetail from '../../hooks/benchmark';
 import useProcessInterval, {
@@ -227,7 +228,7 @@ const BenchmarkDetail = ({
                 </Listbox>
               </div>
             </div>
-            <p>{benchmarkData?.subject || ''}</p>
+            <ReactMarkdown>{benchmarkData?.subject || ''}</ReactMarkdown>
           </div>
         </div>
         <div className="grid flex-1">
