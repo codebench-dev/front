@@ -126,7 +126,7 @@ const BenchmarkDetail = ({
         navTo="/benchmarks"
       />
       <div className="flex p-4">
-        <div className="flex-1 mx-auto border-4 border-dashed border-gray-200 rounded-lg h-96">
+        <div className="flex-1 mx-auto border-4 border-dashed border-gray-200 rounded-lg h-96 p-4">
           <div className="pl-8 pr-8">
             <div className="flex justify-between">
               <h1 className="text-2xl pb-3">Subject</h1>
@@ -232,7 +232,7 @@ const BenchmarkDetail = ({
           </div>
         </div>
         <div className="grid flex-1">
-          <div className="border-4 border-dashed border-gray-200 rounded-lg h-96">
+          <div className="bg-gray-500 rounded-lg h-96">
             <Editor
               onMount={handleEditorDidMount}
               height="100%"
