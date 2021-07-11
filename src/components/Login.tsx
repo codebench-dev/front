@@ -9,7 +9,7 @@ const Login: React.FC = () => {
   const { token, setToken } = useToken();
 
   if (token) {
-    history.push('/dashboard');
+    history.push('/benchmarks');
   }
   const loginUser = async (event: any) => {
     event.preventDefault();
@@ -20,7 +20,7 @@ const Login: React.FC = () => {
     );
 
     setToken(token);
-    history.push('/dashboard');
+    history.push('/benchmarks');
   };
 
   return (
