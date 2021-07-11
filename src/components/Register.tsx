@@ -11,7 +11,7 @@ const Register: React.FC = () => {
   const [message, setMessage] = useState('');
 
   if (token) {
-    history.push('/dashboard');
+    history.push('/benchmarks');
   }
   const registerUser = async (event: any) => {
     event.preventDefault();
@@ -46,7 +46,7 @@ const Register: React.FC = () => {
     );
 
     setToken(token);
-    history.push('/dashboard');
+    history.push('/benchmarks');
   };
 
   return (

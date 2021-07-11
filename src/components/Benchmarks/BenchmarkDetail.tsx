@@ -8,7 +8,7 @@ import useBenchmarkDetail from '../../hooks/benchmark';
 import useProcessInterval, {
   useLastSubmissionForUser,
 } from '../../hooks/submissions';
-import Result from '../Dashboard/Result';
+import Result from './Result';
 import Header from '../Page/Header';
 import Page from '../Page/Page';
 
