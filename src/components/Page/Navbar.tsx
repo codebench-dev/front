@@ -6,13 +6,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useToken } from '../../hooks/token';
 import useProfile from '../../hooks/users';
 
-const navigation = [
-  'Benchmarks',
-  'Dashboard',
-  'Projects',
-  'Calendar',
-  'Reports',
-];
+const navigation = ['Benchmarks'];
 const profile = ['Your Profile', 'Settings', 'Sign out'];
 
 // function classNames(...classes: any[]) {
