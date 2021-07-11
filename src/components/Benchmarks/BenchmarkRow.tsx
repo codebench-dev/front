@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import benchmarkModel from './BenchmarkModel';
+import ReactMarkdown from 'react-markdown';
 
 interface BenchmarkRowProps {
   benchmark: benchmarkModel;
@@ -51,9 +52,11 @@ const BenchmarkRow: React.FC<BenchmarkRowProps> = ({ benchmark }) => {
           key={benchmark.subject.substring(0, 50)}
           className="text-sm text-gray-900"
         >
-          {benchmark.subject.length > truncateSize
-            ? benchmark.subject.substring(0, truncateSize) + '...'
-            : benchmark.subject}
+          <ReactMarkdown>
+            {benchmark.subject.length > truncateSize
+              ? benchmark.subject.substring(0, truncateSize) + '...'
+              : benchmark.subject}
+          </ReactMarkdown>
         </div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
