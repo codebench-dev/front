@@ -7,6 +7,8 @@ interface LayoutProps {
   stdout?: string;
   stderr?: string;
   execDuration?: number;
+  qualityScore?: number;
+  lintScore?: number;
 }
 
 const Result: React.FC<LayoutProps> = ({
@@ -16,6 +18,8 @@ const Result: React.FC<LayoutProps> = ({
   stdout,
   stderr,
   execDuration,
+  qualityScore,
+  lintScore,
 }) => {
   return (
     <div>
@@ -34,6 +38,10 @@ const Result: React.FC<LayoutProps> = ({
       <pre>{stderr}</pre>
       <b>Execution duration (μs): </b>
       <pre>{execDuration}</pre>
+      <b>Quality score: </b>
+      <pre>{qualityScore}</pre>
+      <b>Quality lint: </b>
+      <pre>{lintScore}</pre>
     </div>
   );
 };
