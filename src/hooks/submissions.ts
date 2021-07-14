@@ -45,7 +45,7 @@ function useProcessInterval({
       onError();
     },
     onSuccess: (data) => {
-      setProcessId(data.id);
+      setProcessId(data.submission.id);
     },
   });
 
@@ -63,6 +63,8 @@ function useProcessInterval({
           stdout: string;
           stderr: string;
           execDuration: number;
+          qualityScore: number;
+          lintScore: number;
         };
       } = await authenticatedRequest({
         url: `submissions/${processId}`,

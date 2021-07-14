@@ -84,6 +84,8 @@ const BenchmarkDetail = ({
         stderr={jobData.stderr}
         stdout={jobData.stdout}
         execDuration={jobData.execDuration}
+        qualityScore={jobData.qualityScore}
+        lintScore={jobData.lintScore}
       />
     );
   }
