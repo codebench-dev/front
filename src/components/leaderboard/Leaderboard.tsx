@@ -12,7 +12,7 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
   console.log(leaderboard);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-80 scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-100">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -43,12 +43,10 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
                   >
                     Lint Score
                   </th>
-                  {/*<th scope="col" className="relative px-6 py-3">*/}
-                  {/*  <span className="sr-only">Edit</span>*/}
-                  {/*</th>*/}
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              {/*<div className="overscroll-auto h-50">*/}
+              <tbody className="bg-white divide-y divide-gray-200 ">
                 {leaderboard
                   ? leaderboard.map((row) => (
                       <tr key={row.user?.email}>
@@ -80,16 +78,17 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                            {row.lintScore}
+                            {row.qualityScore}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {row.qualityScore}
+                          {row.lintScore}
                         </td>
                       </tr>
                     ))
                   : ''}
               </tbody>
+              {/*</div>*/}
             </table>
           </div>
         </div>
