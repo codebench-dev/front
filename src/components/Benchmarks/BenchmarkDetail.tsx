@@ -11,6 +11,7 @@ import useProcessInterval, {
 import Result from './Result';
 import Header from '../Page/Header';
 import Page from '../Page/Page';
+import Leaderboard from '../leaderboard/Leaderboard';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -128,8 +129,9 @@ const BenchmarkDetail = ({
         navTo="/benchmarks"
       />
       <div className="flex p-4">
-        <div className="flex-1 mx-auto border-4 border-dashed border-gray-200 rounded-lg h-96 p-4">
-          <div className="pl-8 pr-8">
+        <div className="grid flex-1 ">
+          {/*<div className="flex-1 mx-auto border-4 border-dashed border-gray-200 rounded-lg h-96 p-4">*/}
+          <div className="pl-8 pr-8 border-4 border-dashed border-gray-200 rounded-lg h-96 p-4">
             <div className="flex justify-between">
               <h1 className="text-2xl pb-3">Subject</h1>
               <div className="">
@@ -232,6 +234,9 @@ const BenchmarkDetail = ({
             </div>
             <ReactMarkdown>{benchmarkData?.subject || ''}</ReactMarkdown>
           </div>
+          <Leaderboard
+            benchmarkId={benchmarkData?.id ? benchmarkData.id : ''}
+          />
         </div>
         <div className="grid flex-1">
           <div className="bg-gray-500 rounded-lg h-96">
