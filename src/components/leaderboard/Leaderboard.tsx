@@ -1,5 +1,6 @@
-import Gravatar from 'react-gravatar';
+import { DateTime } from 'luxon';
 import React from 'react';
+import Gravatar from 'react-gravatar';
 import { useLeaderboardList } from '../../hooks/leaderboard';
 
 interface LeaderboardProps {
@@ -80,7 +81,9 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="text-sm text-gray-900">
-                              {row.createdAt}
+                              {row.createdAt
+                                ? DateTime.fromISO(row.createdAt).toRelative()
+                                : row.createdAt}
                             </div>
                             <div className="text-sm text-gray-500">
                               {row.language}
