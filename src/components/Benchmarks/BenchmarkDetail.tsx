@@ -247,7 +247,7 @@ const BenchmarkDetail = ({
               language={selected.name}
             />
           </div>
-          <div className="justify-self-start">{result && result}</div>
+          <div className="justify-self-start ml-10">{result && result}</div>
           <div className="justify-self-end flex-1">
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 py-2 px-4 rounded"
