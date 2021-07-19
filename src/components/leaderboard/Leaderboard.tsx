@@ -4,6 +4,7 @@ import Gravatar from 'react-gravatar';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import { useLeaderboardList } from '../../hooks/leaderboard';
 import { Listbox, Transition } from '@headlessui/react';
+import LeaderboardModel from './LeaderboardModel';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -42,9 +43,31 @@ interface LeaderboardProps {
 
 const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
   const [selected, setSelected] = useState(languages[0]);
+  const [sortedField, setSortedField] = useState('qualityScore');
 
   const leaderboard = useLeaderboardList(benchmarkId).data;
+  leaderboard?.sort();
   let rankCounter = 1;
+
+  console.log(sortedField);
+
+  function compareFunction(
+    row1: LeaderboardModel,
+    row2: LeaderboardModel,
+  ): number {
+    if (row1 === undefined || row2 === undefined) return 0;
+    switch (sortedField) {
+      case 'lintScore':
+        if (row1.lintScore! > row2.lintScore!) {
+          return -1;
+        }
+        if (row1.lintScore! < row1.lintScore!) {
+          return 1;
+        }
+        return 0;
+    }
+    return 0;
+  }
 
   return (
     <div className="mt-3 ml-2">
@@ -62,7 +85,7 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
                     <span className="flex items-center">
                       <img
                         src={selected.avatar}
-                        alt=""
+                        alt="Language logo"
                         className="flex-shrink-0 h-6 w-6 rounded-full"
                       />
                       <span className="ml-3 block truncate">
@@ -106,7 +129,7 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
                               <div className="flex items-center">
                                 <img
                                   src={language.avatar}
-                                  alt=""
+                                  alt="Language logo"
                                   className="flex-shrink-0 h-6 w-6 rounded-full"
                                 />
                                 <span
@@ -170,17 +193,34 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
                     >
                       Date / Language
                     </th>
+
                     <th
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      onClick={() => setSortedField('qualityScore')}
                     >
-                      Quality Score
+                      <div className="flex">
+                        Quality Score
+                        <img
+                          className="w-4 h-4 ml-2"
+                          alt="Sort by quality score"
+                          src="https://image.flaticon.com/icons/png/512/162/162735.png"
+                        />
+                      </div>
                     </th>
                     <th
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      onClick={() => setSortedField('lintScore')}
                     >
-                      Lint Score
+                      <div className="flex">
+                        Lint Score
+                        <img
+                          className="w-4 h-4 ml-2"
+                          alt="Sort by lint score"
+                          src="https://image.flaticon.com/icons/png/512/162/162735.png"
+                        />
+                      </div>
                     </th>
                   </tr>
                 </thead>
@@ -192,8 +232,9 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
                             row.language === selected.name ||
                             selected.name === 'all',
                         )
+                        .sort(compareFunction)
                         .map((row) => (
-                          <tr key={row.user?.email}>
+                          <tr key={row.id}>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="ml-4">
                                 <div className="text-sm font-medium text-gray-900">
