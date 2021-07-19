@@ -10,7 +10,6 @@ export function useLeaderboardList(benchmarkId: string) {
         const { data } = await authenticatedRequest({
           url: `benchmarks/${benchmarkId}/leaderboard`,
         });
-        console.log(data);
         return data;
       }
     },
