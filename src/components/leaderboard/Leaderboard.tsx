@@ -61,7 +61,7 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
         if (row1.lintScore! > row2.lintScore!) {
           return -1;
         }
-        if (row1.lintScore! < row1.lintScore!) {
+        if (row1.lintScore! < row2.lintScore!) {
           return 1;
         }
         return 0;
