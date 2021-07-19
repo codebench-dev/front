@@ -12,31 +12,13 @@ import Result from './Result';
 import Header from '../Page/Header';
 import Page from '../Page/Page';
 import Leaderboard from '../leaderboard/Leaderboard';
+import { languagesList } from '../../assets/languages';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-const languages = [
-  {
-    id: 1,
-    name: 'python',
-    avatar:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/768px-Python-logo-notext.svg.png',
-  },
-  {
-    id: 2,
-    name: 'go',
-    avatar:
-      'https://blog.engineering.publicissapient.fr/wp-content/uploads/2016/10/gopher.png',
-  },
-  {
-    id: 3,
-    name: 'cpp',
-    avatar:
-      'https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg',
-  },
-];
+const languages = languagesList;
 
 type BenchmarkDetailParams = {
   id: string;
