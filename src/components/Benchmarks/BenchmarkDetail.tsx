@@ -110,9 +110,8 @@ const BenchmarkDetail = ({
         button="Back"
         navTo="/benchmarks"
       />
-      <div className="flex p-4">
-        <div className="grid flex-1 ">
-          {/*<div className="flex-1 mx-auto border-4 border-dashed border-gray-200 rounded-lg h-96 p-4">*/}
+      <div className="flex p-4 overflow-hidden">
+        <div className="grid flex-1">
           <div className="pl-8 pr-8 border-4 border-dashed border-gray-200 rounded-lg h-96 p-4">
             <div className="flex justify-between">
               <h1 className="text-2xl pb-3">Subject</h1>
@@ -216,9 +215,7 @@ const BenchmarkDetail = ({
             </div>
             <ReactMarkdown>{benchmarkData?.subject || ''}</ReactMarkdown>
           </div>
-          <Leaderboard
-            benchmarkId={benchmarkData?.id ? benchmarkData.id : ''}
-          />
+
         </div>
         <div className="grid flex-1">
           <div className="bg-gray-500 rounded-lg h-96">
@@ -228,24 +225,27 @@ const BenchmarkDetail = ({
               value={lastSubmission && lastSubmission}
               language={selected.name}
             />
-          </div>
-          <div className="justify-self-start ml-10">{result && result}</div>
-          <div className="justify-self-end flex-1">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 py-2 px-4 rounded"
-              onClick={() => {
-                mutate({
-                  code: editorRef.current.getValue(),
-                  benchmarkId:
-                    benchmarkData?.id !== undefined ? benchmarkData.id : '',
-                  language: selected.name,
-                });
-              }}
-            >
-              Run code
-            </button>
+            <div className="grid justify-items-stretch">
+              <button
+                className="justify-self-end bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 py-2 px-4 rounded"
+                onClick={() => {
+                  mutate({
+                    code: editorRef.current.getValue(),
+                    benchmarkId:
+                      benchmarkData?.id !== undefined ? benchmarkData.id : '',
+                    language: selected.name,
+                  });
+                }}
+              >
+                Run code
+              </button>
+            </div>
+            <div className="justify-self-start ml-10">{result && result}</div>
           </div>
         </div>
+        <Leaderboard
+          benchmarkId={benchmarkData?.id ? benchmarkData.id : ''}
+        />
       </div>
     </Page>
   );
