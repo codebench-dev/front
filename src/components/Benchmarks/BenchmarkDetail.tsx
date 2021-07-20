@@ -215,7 +215,6 @@ const BenchmarkDetail = ({
             </div>
             <ReactMarkdown>{benchmarkData?.subject || ''}</ReactMarkdown>
           </div>
-
         </div>
         <div className="grid flex-1">
           <div className="bg-gray-500 rounded-lg h-96">
@@ -243,9 +242,7 @@ const BenchmarkDetail = ({
             <div className="justify-self-start ml-10">{result && result}</div>
           </div>
         </div>
-        <Leaderboard
-          benchmarkId={benchmarkData?.id ? benchmarkData.id : ''}
-        />
+        <Leaderboard benchmarkId={benchmarkData?.id ? benchmarkData.id : ''} />
       </div>
     </Page>
   );
