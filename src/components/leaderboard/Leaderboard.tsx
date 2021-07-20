@@ -198,6 +198,34 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
                         />
                       </div>
                     </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      onClick={() => setSortedField('lintScore')}
+                    >
+                      <div className="flex">
+                        Memory usage
+                        <img
+                          className="w-4 h-4 ml-2"
+                          alt="Sort by lint score"
+                          src="https://image.flaticon.com/icons/png/512/162/162735.png"
+                        />
+                      </div>
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      onClick={() => setSortedField('lintScore')}
+                    >
+                      <div className="flex">
+                        Exec time
+                        <img
+                          className="w-4 h-4 ml-2"
+                          alt="Sort by lint score"
+                          src="https://image.flaticon.com/icons/png/512/162/162735.png"
+                        />
+                      </div>
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200 ">
@@ -250,6 +278,12 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                               {row.lintScore}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {/*{row.lintScore}*/}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {/*{row.lintScore}*/}
                             </td>
                           </tr>
                         ))
