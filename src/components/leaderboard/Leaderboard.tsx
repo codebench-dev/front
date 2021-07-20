@@ -46,7 +46,7 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
   }
 
   return (
-    <div className="mt-3 ml-2">
+    <div className="mt-3 ml-2 flex-1">
       <div className="flex justify-between">
         <h1 className="text-2xl pb-3 ">Leaderboard</h1>
         <div>
@@ -144,11 +144,11 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
           </Listbox>
         </div>
       </div>
-      <div className="ml-2 flex flex-col h-80 scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-100">
+      <div className="ml-2 flex flex-col h-screen scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-100">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200">
+              <table className=" divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
                     <th
