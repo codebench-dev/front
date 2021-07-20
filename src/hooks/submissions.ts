@@ -63,6 +63,7 @@ function useProcessInterval({
           stdout: string;
           stderr: string;
           execDuration: number;
+          memUsage: number;
           qualityScore: number;
           lintScore: number;
         };

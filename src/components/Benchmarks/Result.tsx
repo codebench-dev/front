@@ -7,6 +7,7 @@ interface LayoutProps {
   stdout?: string;
   stderr?: string;
   execDuration?: number;
+  memUsage?: number;
   qualityScore?: number;
   lintScore?: number;
 }
@@ -18,6 +19,7 @@ const Result: React.FC<LayoutProps> = ({
   stdout,
   stderr,
   execDuration,
+  memUsage,
   qualityScore,
   lintScore,
 }) => {
