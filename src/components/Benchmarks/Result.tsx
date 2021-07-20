@@ -22,27 +22,30 @@ const Result: React.FC<LayoutProps> = ({
   lintScore,
 }) => {
   return (
-    <div>
-      <b>Status: </b>
-      {status}
-      <div className="flex justify-between">
-        <b>Execution duration (μs): </b>
-        <div
-          className={
-            execDuration == null || execDuration === 0
-              ? 'animate-pulse h w-48 bg-gray-800 rounded-lg text-white text-cente'
-              : 'h w-48 bg-gray-800 rounded-lg text-white text-cente'
-          }
-        >
-          {execDuration === 0 ? null : execDuration}
-        </div>
+    <div className="flex">
+      <div className="w-1/3">
+        <ScoresComponent qualityScore={qualityScore} lintScore={lintScore} />
       </div>
-      <OutputsComponent text={'Message'} value={message} />
-      <OutputsComponent text={'Error'} value={error} />
-      <OutputsComponent text={'Stdout'} value={stdout} />
-      <OutputsComponent text={'Stderr'} value={stderr} />
-
-      <ScoresComponent qualityScore={qualityScore} lintScore={lintScore} />
+      <div className="w-2/3">
+        <b>Status: </b>
+        {status}
+        <div className="flex justify-between">
+          <b>Execution duration (μs): </b>
+          <div
+            className={
+              execDuration == null || execDuration === 0
+                ? 'animate-pulse h w-48 bg-gray-800 rounded-lg text-white text-cente'
+                : 'h w-48 bg-gray-800 rounded-lg text-white text-cente'
+            }
+          >
+            {execDuration === 0 ? null : execDuration}
+          </div>
+        </div>
+        <OutputsComponent text={'Message'} value={message} />
+        <OutputsComponent text={'Error'} value={error} />
+        <OutputsComponent text={'Stdout'} value={stdout} />
+        <OutputsComponent text={'Stderr'} value={stderr} />
+      </div>
     </div>
   );
 };

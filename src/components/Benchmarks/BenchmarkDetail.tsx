@@ -1,4 +1,4 @@
-import { Listbox, Transition } from '@headlessui/react';
+import { Dialog, Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import Editor from '@monaco-editor/react';
 import React, { Fragment, useRef, useState } from 'react';
@@ -13,6 +13,7 @@ import Header from '../Page/Header';
 import Page from '../Page/Page';
 import Leaderboard from '../leaderboard/Leaderboard';
 import { languagesList } from '../../assets/languages';
+import { XIcon } from '@heroicons/react/outline';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -28,6 +29,7 @@ const BenchmarkDetail = ({
   match,
 }: RouteComponentProps<BenchmarkDetailParams>) => {
   const [selected, setSelected] = useState(languages[0]);
+  const [open, setOpen] = useState(false);
 
   //Get monaco instance to access code later
   const editorRef: any = useRef<null>(null);
@@ -103,15 +105,84 @@ const BenchmarkDetail = ({
     lastSubmission = lastSubmissionData.code;
   }
 
+  function openLeaderboardPanel() {
+    setOpen(true);
+  }
+
   return (
     <Page>
+      {/*Leaderboard side panel*/}
+      <Transition.Root show={open} as={Fragment}>
+        <Dialog
+          as="div"
+          static
+          className="fixed inset-0 overflow-hidden"
+          open={open}
+          onClose={setOpen}
+        >
+          <div className="absolute inset-0 overflow-hidden">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-in-out duration-500"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in-out duration-500"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <Dialog.Overlay className="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+            </Transition.Child>
+            <div className="fixed inset-y-0 right-0 pl-10 max-w-full flex">
+              <Transition.Child
+                as={Fragment}
+                enter="transform transition ease-in-out duration-500 sm:duration-700"
+                enterFrom="translate-x-full"
+                enterTo="translate-x-0"
+                leave="transform transition ease-in-out duration-500 sm:duration-700"
+                leaveFrom="translate-x-0"
+                leaveTo="translate-x-full"
+              >
+                <div className="relative w-screen md:w-auto">
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-in-out duration-500"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leave="ease-in-out duration-500"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <div className="absolute top-0 left-0 -ml-8 pt-4 pr-2 flex sm:-ml-10 sm:pr-4">
+                      <button
+                        className="rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
+                        onClick={() => setOpen(false)}
+                      >
+                        <span className="sr-only">Close panel</span>
+                        <XIcon className="h-6 w-6" aria-hidden="true" />
+                      </button>
+                    </div>
+                  </Transition.Child>
+                  <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-hidden">
+                    <div className="relative flex-1 px-4 sm:px-6">
+                      <Leaderboard
+                        benchmarkId={benchmarkData?.id ? benchmarkData.id : ''}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition.Root>
+
       <Header
-        title={benchmarkData?.title || 'eee'}
+        title={benchmarkData?.title || 'Failed to load benchmark'}
         button="Back"
         navTo="/benchmarks"
       />
-      <div className="flex p-4 overflow-hidden">
-        <div className="grid flex-1">
+      <div className="flex p-4 overflow-hidden ">
+        <div className="grid w-2/5">
           <div className="pl-8 pr-8 border-4 border-dashed border-gray-200 rounded-lg h-96 p-4">
             <div className="flex justify-between">
               <h1 className="text-2xl pb-3">Subject</h1>
@@ -151,7 +222,7 @@ const BenchmarkDetail = ({
                         >
                           <Listbox.Options
                             static
-                            className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
+                            className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-96 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
                           >
                             {languages.map((language) => (
                               <Listbox.Option
@@ -214,17 +285,27 @@ const BenchmarkDetail = ({
               </div>
             </div>
             <ReactMarkdown>{benchmarkData?.subject || ''}</ReactMarkdown>
+            <div className="flex">
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 py-2 px-4 rounded"
+                onClick={openLeaderboardPanel}
+              >
+                See Leaderboard
+              </button>
+            </div>
           </div>
         </div>
-        <div className="grid flex-1">
-          <div className="bg-gray-500 rounded-lg h-96">
+        <div className="grid w-3/5">
+          <div className="bg-gray-500 h-96">
             <Editor
               onMount={handleEditorDidMount}
               height="100%"
               value={lastSubmission && lastSubmission}
               language={selected.name}
             />
-            <div className="grid justify-items-stretch">
+          </div>
+          <div className="grid justify-items-end">
+            <div className="flex">
               <button
                 className="justify-self-end bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 py-2 px-4 rounded"
                 onClick={() => {
@@ -239,11 +320,12 @@ const BenchmarkDetail = ({
                 Run code
               </button>
             </div>
-            <div className="justify-self-start ml-10">{result && result}</div>
           </div>
         </div>
-        <Leaderboard benchmarkId={benchmarkData?.id ? benchmarkData.id : ''} />
+
+        {/*<Leaderboard benchmarkId={benchmarkData?.id ? benchmarkData.id : ''} />*/}
       </div>
+      <div className="justify-self-start ml-10">{result && result}</div>
     </Page>
   );
 };
