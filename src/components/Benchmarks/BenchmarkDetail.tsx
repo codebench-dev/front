@@ -73,6 +73,7 @@ const BenchmarkDetail = ({
         stderr={jobData.stderr}
         stdout={jobData.stdout}
         execDuration={jobData.execDuration}
+        memUsage={jobData.memUsage}
         qualityScore={jobData.qualityScore}
         lintScore={jobData.lintScore}
       />
