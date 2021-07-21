@@ -14,6 +14,7 @@ import Page from '../Page/Page';
 import Leaderboard from '../leaderboard/Leaderboard';
 import { languagesList } from '../../assets/languages';
 import { XIcon } from '@heroicons/react/outline';
+import useDarkMode from '../../hooks/darkmode';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -30,9 +31,12 @@ const BenchmarkDetail = ({
 }: RouteComponentProps<BenchmarkDetailParams>) => {
   const [selected, setSelected] = useState(languages[0]);
   const [open, setOpen] = useState(false);
+  const [colorTheme] = useDarkMode();
 
   //Get monaco instance to access code later
   const editorRef: any = useRef<null>(null);
+
+  let editorTheme = colorTheme === 'dark' ? 'light' : 'vs-dark';
 
   function handleEditorDidMount(editor: any, monaco: any) {
     editorRef.current = editor;
@@ -185,16 +189,16 @@ const BenchmarkDetail = ({
         <div className="grid w-2/5">
           <div className="pl-8 pr-8 border-4 border-dashed border-gray-200 rounded-lg h-96 p-4">
             <div className="flex justify-between">
-              <h1 className="text-2xl pb-3">Subject</h1>
+              <h1 className="text-2xl pb-3 dark:text-white">Subject</h1>
               <div className="">
                 <Listbox value={selected} onChange={setSelected}>
                   {({ open }) => (
                     <>
-                      <Listbox.Label className="block text-sm font-medium text-gray-700">
+                      <Listbox.Label className="block dark:text-white text-sm font-medium text-gray-700">
                         Languages
                       </Listbox.Label>
                       <div className="mt-1 relative">
-                        <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <Listbox.Button className="dark:text-white dark:bg-gray-800 relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                           <span className="flex items-center">
                             <img
                               src={selected.avatar}
@@ -222,7 +226,7 @@ const BenchmarkDetail = ({
                         >
                           <Listbox.Options
                             static
-                            className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-96 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
+                            className="dark:text-white dark:bg-gray-800 absolute z-10 mt-1 w-full bg-white shadow-lg max-h-96 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
                           >
                             {languages.map((language) => (
                               <Listbox.Option
@@ -231,7 +235,7 @@ const BenchmarkDetail = ({
                                   classNames(
                                     active
                                       ? 'text-white bg-indigo-600'
-                                      : 'text-gray-900',
+                                      : 'text-gray-900 dark:text-white',
                                     'cursor-default select-none relative py-2 pl-3 pr-9',
                                   )
                                 }
@@ -262,7 +266,7 @@ const BenchmarkDetail = ({
                                         className={classNames(
                                           active
                                             ? 'text-white'
-                                            : 'text-indigo-600',
+                                            : 'text-indigo-600 dark:text-white',
                                           'absolute inset-y-0 right-0 flex items-center pr-4',
                                         )}
                                       >
@@ -284,7 +288,9 @@ const BenchmarkDetail = ({
                 </Listbox>
               </div>
             </div>
-            <ReactMarkdown>{benchmarkData?.subject || ''}</ReactMarkdown>
+            <ReactMarkdown className="dark:text-white">
+              {benchmarkData?.subject || ''}
+            </ReactMarkdown>
             <div className="flex">
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 py-2 px-4 rounded-full"
@@ -300,6 +306,7 @@ const BenchmarkDetail = ({
             <Editor
               onMount={handleEditorDidMount}
               height="100%"
+              theme={editorTheme}
               value={lastSubmission && lastSubmission}
               language={selected.name}
             />

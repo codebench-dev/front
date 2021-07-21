@@ -22,11 +22,11 @@ const Result: React.FC<LayoutProps> = ({
   lintScore,
 }) => {
   return (
-    <div className="flex">
+    <div className="flex dark:text-white">
       <div className="w-1/3">
         <ScoresComponent qualityScore={qualityScore} lintScore={lintScore} />
       </div>
-      <div className="w-2/3">
+      <div className="w-2/3 ml-2">
         <b>Status: </b>
         {status}
         <div className="flex justify-between">
