@@ -166,7 +166,7 @@ const BenchmarkDetail = ({
                       </button>
                     </div>
                   </Transition.Child>
-                  <div className="h-full flex flex-col py-6 bg-white shadow-xl overflow-hidden">
+                  <div className="h-full flex flex-col py-6 bg-white dark:bg-gray-600 shadow-xl overflow-hidden">
                     <div className="relative flex-1 px-4 sm:px-6">
                       <Leaderboard
                         benchmarkId={benchmarkData?.id ? benchmarkData.id : ''}
