@@ -15,7 +15,7 @@ function App() {
   const queryClient = new QueryClient();
 
   return (
-    <div className="wrapper">
+    <div className="wrapper transition duration-500 dark:bg-gray-600 h-screen">
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <Switch>
