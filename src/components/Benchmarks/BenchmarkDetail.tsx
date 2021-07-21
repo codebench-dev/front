@@ -178,7 +178,7 @@ const BenchmarkDetail = ({
 
       <Header
         title={benchmarkData?.title || 'Failed to load benchmark'}
-        button="Back"
+        button="back"
         navTo="/benchmarks"
       />
       <div className="flex p-4 overflow-hidden ">
@@ -287,10 +287,10 @@ const BenchmarkDetail = ({
             <ReactMarkdown>{benchmarkData?.subject || ''}</ReactMarkdown>
             <div className="flex">
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 py-2 px-4 rounded"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 py-2 px-4 rounded-full"
                 onClick={openLeaderboardPanel}
               >
-                See Leaderboard
+                Leaderboard 📈
               </button>
             </div>
           </div>
@@ -317,7 +317,7 @@ const BenchmarkDetail = ({
                   });
                 }}
               >
-                Run code
+                Run code 🚀
               </button>
             </div>
           </div>
