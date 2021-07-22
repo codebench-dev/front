@@ -7,7 +7,7 @@ ENV REACT_APP_API_ENDPOINT $REACT_APP_API_ENDPOINT
 RUN mkdir /app
 WORKDIR /app
 COPY package.json /app
-RUN npm install
+RUN npm install --force
 COPY . /app
 RUN npm run build
 
