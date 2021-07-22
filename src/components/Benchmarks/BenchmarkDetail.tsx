@@ -6,9 +6,9 @@ import React, { Fragment, useRef, useState } from 'react';
 import Loader from 'react-loader-spinner';
 import ReactMarkdown from 'react-markdown';
 import { RouteComponentProps } from 'react-router-dom';
+import useDarkMode from 'use-dark-mode';
 import { languagesList } from '../../assets/languages';
 import useBenchmarkDetail from '../../hooks/benchmark';
-import useDarkMode from '../../hooks/darkmode';
 import useProcessInterval, {
   useLastSubmissionForUser,
 } from '../../hooks/submissions';
@@ -32,12 +32,11 @@ const BenchmarkDetail = ({
 }: RouteComponentProps<BenchmarkDetailParams>) => {
   const [selected, setSelected] = useState(languages[0]);
   const [open, setOpen] = useState(false);
-  const [colorTheme] = useDarkMode();
-
+  const darkMode = useDarkMode(false);
   //Get monaco instance to access code later
   const editorRef: any = useRef<null>(null);
 
-  let editorTheme = colorTheme === 'dark' ? 'light' : 'vs-dark';
+  let editorTheme = darkMode.value ? 'vs-dark' : 'vs-light';
 
   function handleEditorDidMount(editor: any, monaco: any) {
     editorRef.current = editor;

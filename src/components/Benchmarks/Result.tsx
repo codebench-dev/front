@@ -81,7 +81,7 @@ const OutputsComponent: React.FC<OutputsComponentProps> = ({ text, value }) => {
   if (value) {
     return (
       <div>
-        <b>{text}:</b>
+        <b className="dark:text-white">{text}:</b>
         <div
           className={'h-auto p-4 mt-2 w-full bg-gray-800 rounded-lg text-white'}
         >
