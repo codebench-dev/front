@@ -1,13 +1,19 @@
+import React, { ReactChild } from 'react';
 import { Link } from 'react-router-dom';
-import React from 'react';
 
 interface HeaderProps {
   title: string;
   button?: string;
   navTo?: string;
+  extraContent?: ReactChild;
 }
 
-const Header: React.FC<HeaderProps> = ({ title, button, navTo }) => {
+const Header: React.FC<HeaderProps> = ({
+  title,
+  button,
+  navTo,
+  extraContent,
+}) => {
   const isButtonNeeded = button !== undefined && navTo !== undefined;
 
   return (
@@ -40,6 +46,9 @@ const Header: React.FC<HeaderProps> = ({ title, button, navTo }) => {
           <h1 className="text-3xl dark:text-white font-bold text-gray-900 ml-2">
             {title}
           </h1>
+          {/* Add space to move extraContent to the end of the header */}
+          <div className="flex-grow"></div>
+          {extraContent}
         </div>
       ) : (
         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between">
