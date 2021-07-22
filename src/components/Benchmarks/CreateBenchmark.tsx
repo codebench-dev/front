@@ -47,7 +47,7 @@ const CreateBenchmark: React.FC = () => {
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full px-3">
               <label
-                className="block uppercase dark:text-white tracking-wide text-gray-700 text-xs font-bold mb-2"
+                className="block uppercase dark:text-gray-100 tracking-wide text-gray-700 text-xs font-bold mb-2"
                 htmlFor="grid-password"
               >
                 Title
@@ -63,7 +63,7 @@ const CreateBenchmark: React.FC = () => {
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full px-3">
               <label
-                className="block dark:text-white uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                className="block dark:text-gray-100 uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                 htmlFor="grid-password"
               >
                 Subject
@@ -78,7 +78,7 @@ const CreateBenchmark: React.FC = () => {
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full px-3">
               <label
-                className="block dark:text-white uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                className="block dark:text-gray-100 uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                 htmlFor="grid-password"
               >
                 Difficulty
