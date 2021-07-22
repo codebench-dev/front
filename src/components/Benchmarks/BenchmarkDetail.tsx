@@ -1,20 +1,21 @@
 import { Dialog, Listbox, Transition } from '@headlessui/react';
+import { XIcon } from '@heroicons/react/outline';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import Editor from '@monaco-editor/react';
 import React, { Fragment, useRef, useState } from 'react';
+import Loader from 'react-loader-spinner';
 import ReactMarkdown from 'react-markdown';
 import { RouteComponentProps } from 'react-router-dom';
+import { languagesList } from '../../assets/languages';
 import useBenchmarkDetail from '../../hooks/benchmark';
+import useDarkMode from '../../hooks/darkmode';
 import useProcessInterval, {
   useLastSubmissionForUser,
 } from '../../hooks/submissions';
-import Result from './Result';
+import Leaderboard from '../leaderboard/Leaderboard';
 import Header from '../Page/Header';
 import Page from '../Page/Page';
-import Leaderboard from '../leaderboard/Leaderboard';
-import { languagesList } from '../../assets/languages';
-import { XIcon } from '@heroicons/react/outline';
-import useDarkMode from '../../hooks/darkmode';
+import Result from './Result';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -62,7 +63,17 @@ const BenchmarkDetail = ({
 
   let result;
   if (isProcessing) {
-    result = 'Processing...';
+    result = (
+      <div className="flex justify-center">
+        <Loader
+          type="ThreeDots"
+          color="#0a75ab"
+          height={100}
+          width={100}
+          timeout={10000}
+        />
+      </div>
+    );
   }
   if (jobData) {
     result = (
@@ -76,6 +87,7 @@ const BenchmarkDetail = ({
         memUsage={jobData.memUsage}
         qualityScore={jobData.qualityScore}
         lintScore={jobData.lintScore}
+        isLoading={isProcessing}
       />
     );
   }
@@ -185,8 +197,31 @@ const BenchmarkDetail = ({
         title={benchmarkData?.title || 'Failed to load benchmark'}
         button="back"
         navTo="/benchmarks"
+        extraContent={
+          <div>
+            <button
+              className="place-self-end bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+              onClick={openLeaderboardPanel}
+            >
+              Leaderboard 📈
+            </button>
+            <button
+              className="justify-self-end bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={() => {
+                mutate({
+                  code: editorRef.current.getValue(),
+                  benchmarkId:
+                    benchmarkData?.id !== undefined ? benchmarkData.id : '',
+                  language: selected.name,
+                });
+              }}
+            >
+              Run code 🚀
+            </button>
+          </div>
+        }
       />
-      <div className="flex p-4 overflow-hidden ">
+      <div className="flex py-6 px-10 overflow-hidden ">
         <div className="grid w-2/5">
           <div className="pl-8 pr-8 border-4 border-dashed border-gray-200 rounded-lg h-96 p-4">
             <div className="flex justify-between">
@@ -195,7 +230,7 @@ const BenchmarkDetail = ({
                 <Listbox value={selected} onChange={setSelected}>
                   {({ open }) => (
                     <>
-                      <Listbox.Label className="block dark:text-white text-sm font-medium text-gray-700">
+                      <Listbox.Label className="w-36 block dark:text-white text-sm font-medium text-gray-700">
                         Languages
                       </Listbox.Label>
                       <div className="mt-1 relative">
@@ -248,14 +283,14 @@ const BenchmarkDetail = ({
                                       <img
                                         src={language.avatar}
                                         alt=""
-                                        className="flex-shrink-0 h-6 w-6 rounded-full"
+                                        className="flex-shrink-0 h-6 w-6 rounded-full mr-4"
                                       />
                                       <span
                                         className={
                                           selected
                                             ? 'font-semibold'
                                             : 'font-normal' +
-                                              'ml-3 block truncate'
+                                              'ml-3 mr-4 block truncate'
                                         }
                                       >
                                         {language.name}
@@ -292,14 +327,6 @@ const BenchmarkDetail = ({
             <ReactMarkdown className="dark:text-white">
               {benchmarkData?.subject || ''}
             </ReactMarkdown>
-            <div className="flex">
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 py-2 px-4 rounded-full"
-                onClick={openLeaderboardPanel}
-              >
-                Leaderboard 📈
-              </button>
-            </div>
           </div>
         </div>
         <div className="grid w-3/5">
@@ -312,28 +339,11 @@ const BenchmarkDetail = ({
               language={selected.name}
             />
           </div>
-          <div className="grid justify-items-end">
-            <div className="flex">
-              <button
-                className="justify-self-end bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 py-2 px-4 rounded"
-                onClick={() => {
-                  mutate({
-                    code: editorRef.current.getValue(),
-                    benchmarkId:
-                      benchmarkData?.id !== undefined ? benchmarkData.id : '',
-                    language: selected.name,
-                  });
-                }}
-              >
-                Run code 🚀
-              </button>
-            </div>
-          </div>
         </div>
 
         {/*<Leaderboard benchmarkId={benchmarkData?.id ? benchmarkData.id : ''} />*/}
       </div>
-      <div className="justify-self-start ml-10">{result && result}</div>
+      <div className="justify-self-start py-6 px-10">{result && result}</div>
     </Page>
   );
 };
