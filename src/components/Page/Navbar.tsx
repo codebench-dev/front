@@ -3,27 +3,36 @@ import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import React, { Fragment } from 'react';
 import Gravatar from 'react-gravatar';
 import { Link, useHistory } from 'react-router-dom';
+import useDarkMode from 'use-dark-mode';
 import { useToken } from '../../hooks/token';
 import useProfile from '../../hooks/users';
-import useDarkMode from '../../hooks/darkmode';
 
 const navigation = ['Benchmarks'];
 const profile = ['Your Profile', 'Settings', 'Sign out'];
 
-// function classNames(...classes: any[]) {
-//   return classes.filter(Boolean).join(' ');
-// }
-
 export default function Navbar() {
   const { setToken } = useToken();
   const history = useHistory();
-  const [colorTheme, setTheme] = useDarkMode();
+  const darkMode = useDarkMode(false);
 
   const logOut = (event: any) => {
     event.preventDefault();
 
     setToken('');
     history.push('/');
+  };
+
+  const toggelDarkMode = () => {
+    const root = window.document.documentElement;
+    if (darkMode.value) {
+      root.classList.remove('dark');
+      root.classList.add('light');
+    } else {
+      root.classList.remove('light');
+      root.classList.add('dark');
+    }
+
+    darkMode.toggle();
   };
 
   // Get Profile
@@ -92,13 +101,12 @@ export default function Navbar() {
                   <div className="ml-4 flex items-center md:ml-6">
                     <button
                       onClick={() => {
-                        // @ts-ignore
-                        setTheme(colorTheme);
+                        toggelDarkMode();
                       }}
                       className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                     >
                       <span className="sr-only">Dark mode</span>
-                      {colorTheme === 'light' ? (
+                      {!darkMode.value ? (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-6 w-6"
