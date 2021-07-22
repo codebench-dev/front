@@ -1,11 +1,11 @@
+import { Listbox, Transition } from '@headlessui/react';
+import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import { DateTime } from 'luxon';
 import React, { Fragment, useState } from 'react';
 import Gravatar from 'react-gravatar';
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
-import { useLeaderboardList } from '../../hooks/leaderboard';
-import { Listbox, Transition } from '@headlessui/react';
-import LeaderboardModel from './LeaderboardModel';
 import { languagesFilterList } from '../../assets/languages';
+import { useLeaderboardList } from '../../hooks/leaderboard';
+import LeaderboardModel from './LeaderboardModel';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -56,7 +56,7 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
                 {/*<Listbox.Label className="block text-sm font-medium text-gray-700">*/}
                 {/*  Languages filter*/}
                 {/*</Listbox.Label>*/}
-                <div className="mt-1 relative">
+                <div className="mb-4 w-36 relative">
                   <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     <span className="flex items-center">
                       <img
@@ -111,7 +111,7 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
                                 <span
                                   className={
                                     selected
-                                      ? 'font-semibold'
+                                      ? 'font-semibold ml-3 block truncate'
                                       : 'font-normal ml-3 block truncate'
                                   }
                                 >
