@@ -1,8 +1,8 @@
+import { useBenchmarkSList } from '../../hooks/benchmark';
 import Header from '../Page/Header';
 import Page from '../Page/Page';
 import benchmarkModel from './BenchmarkModel';
 import BenchmarkRow from './BenchmarkRow';
-import { useBenchmarkSList } from '../../hooks/benchmark';
 
 const Benchmarks: React.FC = () => {
   let benchmarks: benchmarkModel[] = [];
@@ -40,25 +40,25 @@ const Benchmarks: React.FC = () => {
                     <tr>
                       <th
                         scope="col"
-                        className="dark:text-white px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        className="dark:text-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Title
                       </th>
                       <th
                         scope="col"
-                        className="dark:text-white px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        className="dark:text-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Subject
                       </th>
                       <th
                         scope="col"
-                        className="dark:text-white px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        className="dark:text-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Difficulty
                       </th>
                       <th
                         scope="col"
-                        className="dark:text-white px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        className="dark:text-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
                         Creator
                       </th>

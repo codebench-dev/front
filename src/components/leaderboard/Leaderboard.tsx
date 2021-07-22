@@ -48,7 +48,7 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
   return (
     <div className="mt-3 ml-2 flex-1">
       <div className="flex justify-between">
-        <h1 className="text-2xl pb-3 dark:text-white ">Leaderboard</h1>
+        <h1 className="text-2xl pb-3 dark:text-gray-100 ">Leaderboard</h1>
         <div>
           <Listbox value={selected} onChange={setSelected}>
             {({ open }) => (
@@ -153,26 +153,26 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
                   <tr>
                     <th
                       scope="col"
-                      className="dark:text-white px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="dark:text-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       Rank
                     </th>
                     <th
                       scope="col"
-                      className="dark:text-white px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="dark:text-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       Name
                     </th>
                     <th
                       scope="col"
-                      className="dark:text-white px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="dark:text-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       Date / Language
                     </th>
 
                     <th
                       scope="col"
-                      className="dark:text-white px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="dark:text-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       onClick={() => setSortedField('qualityScore')}
                     >
                       <div className="flex">
@@ -186,7 +186,7 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
                     </th>
                     <th
                       scope="col"
-                      className="dark:text-white px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="dark:text-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       onClick={() => setSortedField('lintScore')}
                     >
                       <div className="flex">
@@ -200,7 +200,7 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
                     </th>
                     <th
                       scope="col"
-                      className="dark:text-white px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="dark:text-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       onClick={() => setSortedField('lintScore')}
                     >
                       <div className="flex">
@@ -214,7 +214,7 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
                     </th>
                     <th
                       scope="col"
-                      className="dark:text-white px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="dark:text-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       onClick={() => setSortedField('lintScore')}
                     >
                       <div className="flex">
