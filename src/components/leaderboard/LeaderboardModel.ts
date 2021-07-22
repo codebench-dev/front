@@ -3,6 +3,8 @@ export default class LeaderboardModel {
   language: string | undefined;
   lintScore: string | undefined;
   qualityScore: string | undefined;
+  memUsage: number | undefined;
+  execDuration: number | undefined;
   createdAt: string | undefined;
   user:
     | {
