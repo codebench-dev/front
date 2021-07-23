@@ -41,6 +41,20 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
           return 1;
         }
         return 0;
+      case 'duplicatedSubmissions':
+        if (
+          row1.duplicatedSubmissions?.length! <
+          row2.duplicatedSubmissions?.length!
+        ) {
+          return -1;
+        }
+        if (
+          row1.duplicatedSubmissions?.length! >
+          row2.duplicatedSubmissions?.length!
+        ) {
+          return 1;
+        }
+        return 0;
     }
     return 0;
   }
@@ -226,6 +240,20 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
                         />
                       </div>
                     </th>
+                    <th
+                      scope="col"
+                      className="dark:text-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      onClick={() => setSortedField('duplicatedSubmissions')}
+                    >
+                      <div className="flex">
+                        Duplicated submissions
+                        <img
+                          className="w-4 h-4 ml-2"
+                          alt="Sort by lint score"
+                          src="https://image.flaticon.com/icons/png/512/162/162735.png"
+                        />
+                      </div>
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white dark:bg-gray-300 divide-y divide-gray-200 ">
@@ -284,6 +312,11 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                               {row.execDuration}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {row.duplicatedSubmissions
+                                ? row.duplicatedSubmissions.length
+                                : 0}
                             </td>
                           </tr>
                         ))

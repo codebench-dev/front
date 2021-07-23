@@ -6,6 +6,7 @@ export default class LeaderboardModel {
   memUsage: number | undefined;
   execDuration: number | undefined;
   createdAt: string | undefined;
+  duplicatedSubmissions: [] | undefined;
   user:
     | {
         id: string | undefined;
