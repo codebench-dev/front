@@ -55,6 +55,14 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
           return 1;
         }
         return 0;
+      case 'cyclomaticComplexity':
+        if (row1.cyclomaticComplexity! < row2.cyclomaticComplexity!) {
+          return -1;
+        }
+        if (row1.cyclomaticComplexity! > row2.cyclomaticComplexity!) {
+          return 1;
+        }
+        return 0;
     }
     return 0;
   }
@@ -243,6 +251,20 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
                     <th
                       scope="col"
                       className="dark:text-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      onClick={() => setSortedField('cyclomaticComplexity')}
+                    >
+                      <div className="flex">
+                        Cyclomatic complexity
+                        <img
+                          className="w-4 h-4 ml-2"
+                          alt="Sort by lint score"
+                          src="https://image.flaticon.com/icons/png/512/162/162735.png"
+                        />
+                      </div>
+                    </th>
+                    <th
+                      scope="col"
+                      className="dark:text-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       onClick={() => setSortedField('duplicatedSubmissions')}
                     >
                       <div className="flex">
@@ -312,6 +334,9 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                               {row.execDuration}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {row.cyclomaticComplexity}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                               {row.duplicatedSubmissions
