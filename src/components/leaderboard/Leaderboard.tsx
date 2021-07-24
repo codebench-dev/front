@@ -63,6 +63,22 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
           return 1;
         }
         return 0;
+      case 'execDuration':
+        if (row1.execDuration! < row2.execDuration!) {
+          return -1;
+        }
+        if (row1.execDuration! > row2.execDuration!) {
+          return 1;
+        }
+        return 0;
+      case 'memUsage':
+        if (row1.memUsage! < row2.memUsage!) {
+          return -1;
+        }
+        if (row1.memUsage! > row2.memUsage!) {
+          return 1;
+        }
+        return 0;
     }
     return 0;
   }
@@ -223,7 +239,7 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
                     <th
                       scope="col"
                       className="dark:text-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      onClick={() => setSortedField('lintScore')}
+                      onClick={() => setSortedField('memUsage')}
                     >
                       <div className="flex">
                         Memory usage
@@ -237,7 +253,7 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ benchmarkId }) => {
                     <th
                       scope="col"
                       className="dark:text-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      onClick={() => setSortedField('lintScore')}
+                      onClick={() => setSortedField('execDuration')}
                     >
                       <div className="flex">
                         Exec time
