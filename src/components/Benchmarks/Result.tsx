@@ -9,6 +9,7 @@ interface LayoutProps {
   execDuration?: number;
   memUsage?: number;
   qualityScore?: number;
+  cyclomaticComplexity?: number;
   lintScore?: number;
   isLoading: boolean;
 }
@@ -24,6 +25,7 @@ const Result: React.FC<LayoutProps> = ({
   qualityScore,
   lintScore,
   isLoading,
+  cyclomaticComplexity,
 }) => {
   if (status !== 'done' && status !== 'error') {
     return (
@@ -47,6 +49,7 @@ const Result: React.FC<LayoutProps> = ({
             lintScore={lintScore}
             memUsage={memUsage}
             execDuration={execDuration}
+            cyclomaticComplexity={cyclomaticComplexity}
           />
         </div>
         <div className="w-3/5 pl-6">
@@ -100,6 +103,7 @@ interface ScoresComponentProps {
   lintScore: number | undefined;
   memUsage: number | undefined;
   execDuration: number | undefined;
+  cyclomaticComplexity: number | undefined;
 }
 
 const ScoresComponent: React.FC<ScoresComponentProps> = ({
@@ -108,6 +112,7 @@ const ScoresComponent: React.FC<ScoresComponentProps> = ({
   lintScore,
   memUsage,
   execDuration,
+  cyclomaticComplexity,
 }) => {
   return (
     <div className="relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-gray-50 dark:bg-gray-800 w-full shadow-lg rounded">
@@ -123,10 +128,10 @@ const ScoresComponent: React.FC<ScoresComponentProps> = ({
           <table className="items-center w-full bg-transparent border-collapse">
             <tbody>
               <tr className="text-gray-700 dark:text-gray-100">
-                <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left">
+                <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-3 text-left">
                   Exit status
                 </th>
-                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-3">
                   <div className="flex items-center">
                     <span className="mr-2">
                       {status === 'done' ? '✅' : '❌'}
@@ -135,10 +140,10 @@ const ScoresComponent: React.FC<ScoresComponentProps> = ({
                 </td>
               </tr>
               <tr className="text-gray-700 dark:text-gray-100">
-                <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left">
+                <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-3 text-left">
                   Quality score
                 </th>
-                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-3">
                   <div className="flex items-center">
                     <span className="mr-2">{qualityScore}</span>
                     <div className="relative w-full">
@@ -153,10 +158,10 @@ const ScoresComponent: React.FC<ScoresComponentProps> = ({
                 </td>
               </tr>
               <tr className="text-gray-700 dark:text-gray-100">
-                <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left">
+                <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-3 text-left">
                   Lint score
                 </th>
-                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-3">
                   <div className="flex items-center">
                     <span className="mr-2">{lintScore}</span>
                     <div className="relative w-full">
@@ -171,22 +176,32 @@ const ScoresComponent: React.FC<ScoresComponentProps> = ({
                 </td>
               </tr>
               <tr className="text-gray-700 dark:text-gray-100">
-                <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left">
+                <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-3 text-left">
                   Execution duration
                 </th>
-                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-3">
                   <div className="flex items-center">
                     <span className="mr-2">{execDuration} μs</span>
                   </div>
                 </td>
               </tr>
               <tr className="text-gray-700 dark:text-gray-100">
-                <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-left">
+                <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-3 text-left">
                   Max. memory usage
                 </th>
-                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
+                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-3">
                   <div className="flex items-center">
                     <span className="mr-2">{memUsage} KB</span>
+                  </div>
+                </td>
+              </tr>
+              <tr className="text-gray-700 dark:text-gray-100">
+                <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-3 text-left">
+                  Cyclomatic complexity
+                </th>
+                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-3">
+                  <div className="flex items-center">
+                    <span className="mr-2">{cyclomaticComplexity}</span>
                   </div>
                 </td>
               </tr>

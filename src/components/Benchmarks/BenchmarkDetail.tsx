@@ -85,6 +85,7 @@ const BenchmarkDetail = ({
         execDuration={jobData.execDuration}
         memUsage={jobData.memUsage}
         qualityScore={jobData.qualityScore}
+        cyclomaticComplexity={jobData.cyclomaticComplexity}
         lintScore={jobData.lintScore}
         isLoading={isProcessing}
       />

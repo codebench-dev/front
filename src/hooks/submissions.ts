@@ -65,6 +65,7 @@ function useProcessInterval({
           execDuration: number;
           memUsage: number;
           qualityScore: number;
+          cyclomaticComplexity: number;
           lintScore: number;
         };
       } = await authenticatedRequest({
