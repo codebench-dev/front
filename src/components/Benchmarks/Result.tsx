@@ -1,5 +1,6 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
+import { LintErrorDTO } from '../../api/dto/lint-error.dto';
 interface LayoutProps {
   status: string;
   message: string;
@@ -11,6 +12,7 @@ interface LayoutProps {
   qualityScore?: number;
   cyclomaticComplexity?: number;
   lintScore?: number;
+  lintErrors?: LintErrorDTO[];
   isLoading: boolean;
 }
 
@@ -24,6 +26,7 @@ const Result: React.FC<LayoutProps> = ({
   memUsage,
   qualityScore,
   lintScore,
+  lintErrors,
   isLoading,
   cyclomaticComplexity,
 }) => {
@@ -58,6 +61,11 @@ const Result: React.FC<LayoutProps> = ({
             value={stdout}
             isLoading={isLoading}
           />
+          <LinterOutput
+            text={'Linter output'}
+            lintErrors={lintErrors}
+            isLoading={isLoading}
+          />
           <OutputsComponent
             text={'Error'}
             value={error}
@@ -89,6 +97,33 @@ const OutputsComponent: React.FC<OutputsComponentProps> = ({ text, value }) => {
           className={'h-auto p-4 mt-2 w-full bg-gray-800 rounded-lg text-white'}
         >
           {value}
+        </div>
+      </div>
+    );
+  } else {
+    return <div />;
+  }
+};
+
+interface LinterOutputProps {
+  text?: string;
+  lintErrors?: LintErrorDTO[];
+  isLoading: boolean;
+}
+
+const LinterOutput: React.FC<LinterOutputProps> = ({ text, lintErrors }) => {
+  if (lintErrors) {
+    return (
+      <div className="mt-4">
+        <b className="dark:text-gray-100">{text}:</b>
+        <div
+          className={'h-auto p-4 mt-2 w-full bg-gray-800 rounded-lg text-white'}
+        >
+          {lintErrors.map((error, i) => (
+            <p>
+              {error.column}:{error.line}: {error.message}
+            </p>
+          ))}
         </div>
       </div>
     );

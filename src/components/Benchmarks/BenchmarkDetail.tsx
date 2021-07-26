@@ -87,6 +87,7 @@ const BenchmarkDetail = ({
         qualityScore={jobData.qualityScore}
         cyclomaticComplexity={jobData.cyclomaticComplexity}
         lintScore={jobData.lintScore}
+        lintErrors={jobData.lintErrors}
         isLoading={isProcessing}
       />
     );
