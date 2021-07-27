@@ -30,7 +30,7 @@ const Result: React.FC<LayoutProps> = ({
   isLoading,
   cyclomaticComplexity,
 }) => {
-  if (status !== 'done' && status !== 'error') {
+  if (status !== 'done' && status !== 'failed') {
     return (
       <div className="flex justify-center dark:text-gray-100">
         <Loader
@@ -91,7 +91,7 @@ interface OutputsComponentProps {
 const OutputsComponent: React.FC<OutputsComponentProps> = ({ text, value }) => {
   if (value) {
     return (
-      <div>
+      <div className="mt-4">
         <b className="dark:text-gray-100">{text}:</b>
         <div
           className={'h-auto p-4 mt-2 w-full bg-gray-800 rounded-lg text-white'}
