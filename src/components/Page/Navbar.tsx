@@ -79,6 +79,13 @@ export default function Navbar() {
                         {'All benchmarks'}
                       </Link>
                       <Link
+                        key={'rules'}
+                        to={`/rules`}
+                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      >
+                        {'Language rules'}
+                      </Link>
+                      <Link
                         key={'my-benchmarks'}
                         to={`/benchmarks/user/${profileData?.username}`}
                         className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
