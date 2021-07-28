@@ -5,7 +5,7 @@ import Gravatar from 'react-gravatar';
 import { Link, useHistory } from 'react-router-dom';
 import useDarkMode from 'use-dark-mode';
 import { useToken } from '../../hooks/token';
-import useProfile from '../../hooks/users';
+import { useProfile } from '../../hooks/users';
 
 const navigation = ['Benchmarks', 'Rules'];
 const profile = ['Your Profile', 'Settings', 'Sign out'];
@@ -184,6 +184,16 @@ export default function Navbar() {
                                   )}
                                 </Menu.Item>
                               ))} */}
+                              <Menu.Item key="profile">
+                                <a
+                                  className={
+                                    'block px-4 py-2 text-sm text-gray-700'
+                                  }
+                                  href={'/user/' + profileData?.username}
+                                >
+                                  Profile
+                                </a>
+                              </Menu.Item>
                               <Menu.Item key="logout">
                                 <button
                                   className={
