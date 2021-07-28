@@ -22,6 +22,15 @@ export function useBenchmarkSList() {
   });
 }
 
+export function useBenchmarksForUser(username: string) {
+  return useQuery<benchmarkModel[], Error>(`benchmark`, async () => {
+    const { data } = await authenticatedRequest({
+      url: `users/${username}/benchmarks`,
+    });
+    return data;
+  });
+}
+
 export async function createBenchmark(bench: {
   title: string;
   subject: string;
