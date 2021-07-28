@@ -6,6 +6,7 @@ import './App.css';
 import BenchmarkDetail from './components/Benchmarks/BenchmarkDetail';
 import Benchmarks from './components/Benchmarks/Benchmarks';
 import CreateBenchmark from './components/Benchmarks/CreateBenchmark';
+import UserBenchmarks from './components/Benchmarks/UserBenchmarks';
 import Landing from './components/Landing';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -17,7 +18,7 @@ function App() {
   const queryClient = new QueryClient();
 
   return (
-    <div className="wrapper transition duration-500 dark:bg-gray-600 h-screen">
+    <div className="wrapper transition duration-500 dark:bg-gray-600 h-screen bg-gray-50">
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <Switch>
@@ -33,6 +34,10 @@ function App() {
             <PrivateRoute path="/user/:id" component={User} />
             <PrivateRoute exact path="/benchmarks" component={Benchmarks} />
             <PrivateRoute exact path="/rules" component={Rules} />
+            <PrivateRoute
+              path="/benchmarks/user/:id"
+              component={UserBenchmarks}
+            />
             <PrivateRoute
               exact
               path="/benchmarks/create"
