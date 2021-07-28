@@ -5,6 +5,7 @@ export default class benchmarkModel {
   gitUrl: null | undefined;
   createdAt: string | undefined;
   difficulty: string | undefined;
+  maxCyclomaticComplexity: number | undefined;
   creator:
     | {
         id: string | undefined;

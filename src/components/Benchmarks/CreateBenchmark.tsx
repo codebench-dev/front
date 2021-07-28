@@ -29,6 +29,7 @@ const CreateBenchmark: React.FC = () => {
     const title = event.target.title.value;
     const subject = event.target.subject.value;
     const difficulty = event.target.difficulty.value;
+    const maxCyclomaticComplexity = event.target.maxCylomaticComplexity.value;
 
     if (title === '' || subject === '') {
       setMessage('At least one field is blank');
@@ -36,7 +37,7 @@ const CreateBenchmark: React.FC = () => {
       return;
     }
 
-    mutate({ title, subject, difficulty });
+    mutate({ title, subject, difficulty, maxCyclomaticComplexity });
   };
 
   return (
@@ -72,6 +73,23 @@ const CreateBenchmark: React.FC = () => {
                 className="xl:resize-y appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="subject"
                 placeholder="Your benchmark subject"
+              />
+            </div>
+          </div>
+          <div className="flex flex-wrap -mx-3 mb-6">
+            <div className="w-full px-3">
+              <label
+                className="block dark:text-gray-100 uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                htmlFor="grid-password"
+              >
+                Max cyclomatic complexity
+              </label>
+              <input
+                className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                type="number"
+                id="maxCylomaticComplexity"
+                min="1"
+                max="10"
               />
             </div>
           </div>

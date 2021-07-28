@@ -14,6 +14,7 @@ interface LayoutProps {
   lintScore?: number;
   lintErrors?: LintErrorDTO[];
   isLoading: boolean;
+  maxCyclomaticComplexity?: number;
 }
 
 const Result: React.FC<LayoutProps> = ({
@@ -29,6 +30,7 @@ const Result: React.FC<LayoutProps> = ({
   lintErrors,
   isLoading,
   cyclomaticComplexity,
+  maxCyclomaticComplexity,
 }) => {
   if (status !== 'done' && status !== 'failed') {
     return (
@@ -53,6 +55,7 @@ const Result: React.FC<LayoutProps> = ({
             memUsage={memUsage}
             execDuration={execDuration}
             cyclomaticComplexity={cyclomaticComplexity}
+            maxCyclomaticComplexity={maxCyclomaticComplexity}
           />
         </div>
         <div className="w-3/5 pl-6">
@@ -139,6 +142,7 @@ interface ScoresComponentProps {
   memUsage: number | undefined;
   execDuration: number | undefined;
   cyclomaticComplexity: number | undefined;
+  maxCyclomaticComplexity: number | undefined;
 }
 
 const ScoresComponent: React.FC<ScoresComponentProps> = ({
@@ -148,6 +152,7 @@ const ScoresComponent: React.FC<ScoresComponentProps> = ({
   memUsage,
   execDuration,
   cyclomaticComplexity,
+  maxCyclomaticComplexity,
 }) => {
   return (
     <div className="relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-gray-50 dark:bg-gray-800 w-full shadow-lg rounded">
@@ -236,7 +241,13 @@ const ScoresComponent: React.FC<ScoresComponentProps> = ({
                 </th>
                 <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-3">
                   <div className="flex items-center">
-                    <span className="mr-2">{cyclomaticComplexity}</span>
+                    <span className="mr-2">
+                      {cyclomaticComplexity} / {maxCyclomaticComplexity}{' '}
+                      {(cyclomaticComplexity ?? 0) >
+                      (maxCyclomaticComplexity ?? 0)
+                        ? '❌'
+                        : '✅'}
+                    </span>
                   </div>
                 </td>
               </tr>
