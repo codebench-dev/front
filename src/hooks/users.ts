@@ -15,15 +15,34 @@ function useProfile() {
     return JSON.parse(window.atob(base64));
   }
 
-  return useQuery<{ email: string }, Error>('profile', async () => {
-    if (token) {
-      const username = parseJwt(token).username;
-      const { data } = await authenticatedRequest({
-        url: `users/${username}`,
-      });
-      return data;
-    }
-  });
+  return useQuery<{ email: string; name: string; username: string }, Error>(
+    'profile',
+    async () => {
+      if (token) {
+        const username = parseJwt(token).username;
+        const { data } = await authenticatedRequest({
+          url: `users/${username}`,
+        });
+        return data;
+      }
+    },
+  );
 }
 
-export default useProfile;
+function useUser(username: string) {
+  const { token } = useToken();
+
+  return useQuery<{ email: string; name: string; username: string }, Error>(
+    'profile',
+    async () => {
+      if (token) {
+        const { data } = await authenticatedRequest({
+          url: `users/${username}`,
+        });
+        return data;
+      }
+    },
+  );
+}
+
+export { useProfile, useUser };
