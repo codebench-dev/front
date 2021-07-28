@@ -222,9 +222,9 @@ const BenchmarkDetail = ({
           </div>
         }
       />
-      <div className="flex py-6 px-10 overflow-scroll">
+      <div className="flex py-6 px-10">
         <div className="grid w-2/5">
-          <div className="pl-8 pr-8 border-4 border-dashed border-gray-200 rounded-lg h-96 p-4">
+          <div className="pl-8 pr-8 border-4 border-dashed border-gray-200 rounded-lg h-96 p-4 overflow-scroll">
             <div className="flex justify-between">
               <h1 className="text-2xl pb-3 dark:text-gray-100">Subject</h1>
               <div className="">
