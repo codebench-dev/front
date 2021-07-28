@@ -10,6 +10,7 @@ import Landing from './components/Landing';
 import Login from './components/Login';
 import Register from './components/Register';
 import PrivateRoute from './components/Routing/PrivateRoute';
+import Rules from './components/rules/Rules';
 
 function App() {
   const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ function App() {
               <Register />
             </Route>
             <PrivateRoute exact path="/benchmarks" component={Benchmarks} />
+            <PrivateRoute exact path="/rules" component={Rules} />
             <PrivateRoute
               exact
               path="/benchmarks/create"
