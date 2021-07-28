@@ -42,6 +42,13 @@ const BenchmarkDetail = ({
     editorRef.current = editor;
   }
 
+  const {
+    isLoading: isBenchmarkLoading,
+    isError: isBenchmarkError,
+    data: benchmarkData,
+    error,
+  } = useBenchmarkDetail(match.params.id);
+
   let lastSubmission;
   const {
     isLoading: isLastSubmissionLoading,
@@ -89,16 +96,10 @@ const BenchmarkDetail = ({
         lintScore={jobData.lintScore}
         lintErrors={jobData.lintErrors}
         isLoading={isProcessing}
+        maxCyclomaticComplexity={benchmarkData?.maxCyclomaticComplexity}
       />
     );
   }
-
-  const {
-    isLoading: isBenchmarkLoading,
-    isError: isBenchmarkError,
-    data: benchmarkData,
-    error,
-  } = useBenchmarkDetail(match.params.id);
 
   if (isBenchmarkLoading) {
     return <span>Loading....</span>;

@@ -26,6 +26,7 @@ export async function createBenchmark(bench: {
   title: string;
   subject: string;
   difficulty: string;
+  maxCyclomaticComplexity: number;
 }): Promise<benchmarkModel> {
   const { data } = await authenticatedRequest({
     url: `/benchmarks`,
