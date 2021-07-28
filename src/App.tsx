@@ -11,6 +11,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import PrivateRoute from './components/Routing/PrivateRoute';
 import Rules from './components/rules/Rules';
+import User from './components/User';
 
 function App() {
   const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ function App() {
             <Route path="/register">
               <Register />
             </Route>
+            <PrivateRoute path="/user/:id" component={User} />
             <PrivateRoute exact path="/benchmarks" component={Benchmarks} />
             <PrivateRoute exact path="/rules" component={Rules} />
             <PrivateRoute
