@@ -1,6 +1,7 @@
 import React from 'react';
 import Loader from 'react-loader-spinner';
 import { LintErrorDTO } from '../../api/dto/lint-error.dto';
+import { SubmissionDTO } from './submission.dto';
 interface LayoutProps {
   status: string;
   message: string;
@@ -15,6 +16,7 @@ interface LayoutProps {
   lintErrors?: LintErrorDTO[];
   isLoading: boolean;
   maxCyclomaticComplexity?: number;
+  duplicatedSubmissions?: SubmissionDTO[];
 }
 
 const Result: React.FC<LayoutProps> = ({
@@ -31,6 +33,7 @@ const Result: React.FC<LayoutProps> = ({
   isLoading,
   cyclomaticComplexity,
   maxCyclomaticComplexity,
+  duplicatedSubmissions,
 }) => {
   if (status !== 'done' && status !== 'failed') {
     return (
@@ -56,6 +59,7 @@ const Result: React.FC<LayoutProps> = ({
             execDuration={execDuration}
             cyclomaticComplexity={cyclomaticComplexity}
             maxCyclomaticComplexity={maxCyclomaticComplexity}
+            duplicatedSubmissions={duplicatedSubmissions}
           />
         </div>
         <div className="w-3/5 pl-6">
@@ -143,6 +147,7 @@ interface ScoresComponentProps {
   execDuration: number | undefined;
   cyclomaticComplexity: number | undefined;
   maxCyclomaticComplexity: number | undefined;
+  duplicatedSubmissions: SubmissionDTO[] | undefined;
 }
 
 const ScoresComponent: React.FC<ScoresComponentProps> = ({
@@ -153,6 +158,7 @@ const ScoresComponent: React.FC<ScoresComponentProps> = ({
   execDuration,
   cyclomaticComplexity,
   maxCyclomaticComplexity,
+  duplicatedSubmissions,
 }) => {
   return (
     <div className="relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-gray-50 dark:bg-gray-800 w-full shadow-lg rounded">
@@ -247,6 +253,18 @@ const ScoresComponent: React.FC<ScoresComponentProps> = ({
                       (maxCyclomaticComplexity ?? 0)
                         ? '❌'
                         : '✅'}
+                    </span>
+                  </div>
+                </td>
+              </tr>
+              <tr className="text-gray-700 dark:text-gray-100">
+                <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-3 text-left">
+                  Duplicate submissions
+                </th>
+                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-3">
+                  <div className="flex items-center">
+                    <span className="mr-2">
+                      {duplicatedSubmissions?.length}{' '}
                     </span>
                   </div>
                 </td>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { LintErrorDTO } from '../api/dto/lint-error.dto';
+import { SubmissionDTO } from '../components/Benchmarks/submission.dto';
 import authenticatedRequest from '../components/utils/request';
 import { useToken } from './token';
 
@@ -69,6 +70,7 @@ function useProcessInterval({
           cyclomaticComplexity: number;
           lintScore: number;
           lintErrors?: LintErrorDTO[];
+          duplicatedSubmissions: SubmissionDTO[];
         };
       } = await authenticatedRequest({
         url: `submissions/${processId}`,

@@ -96,7 +96,8 @@ const BenchmarkDetail = ({
         lintScore={jobData.lintScore}
         lintErrors={jobData.lintErrors}
         isLoading={isProcessing}
-        maxCyclomaticComplexity={benchmarkData?.maxCyclomaticComplexity}
+        maxCyclomaticComplexity={benchmarkData?.maxCyclomaticComplexity ?? 10}
+        duplicatedSubmissions={jobData.duplicatedSubmissions}
       />
     );
   }
