@@ -1,7 +1,10 @@
 import { DateTime } from 'luxon';
 import Gravatar from 'react-gravatar';
 import { RouteComponentProps } from 'react-router-dom';
+import { useBenchmarksForUser } from '../hooks/benchmark';
 import { useUser } from '../hooks/users';
+import benchmarkModel from './Benchmarks/BenchmarkModel';
+import BenchmarkRow from './Benchmarks/BenchmarkRow';
 import Header from './Page/Header';
 import Page from './Page/Page';
 
@@ -17,6 +20,14 @@ const User = ({ match }: RouteComponentProps<UserParams>) => {
     error,
   } = useUser(match.params.id);
 
+  let benchmarks: benchmarkModel[] = [];
+  const {
+    isLoading: isBenchmarksLoading,
+    isError: isBenchmarksError,
+    data: benchmarksData,
+    error: benchmarksError,
+  } = useBenchmarksForUser(match.params.id);
+
   if (isProfileLoading) {
     return <span>Loading....</span>;
   }
@@ -26,6 +37,11 @@ const User = ({ match }: RouteComponentProps<UserParams>) => {
       return <span>Error: {error.message}</span>;
     }
   }
+
+  if (benchmarksData) {
+    benchmarks = benchmarksData;
+  }
+
   return (
     <Page>
       <Header title="Profile" />
@@ -83,7 +99,7 @@ const User = ({ match }: RouteComponentProps<UserParams>) => {
 
               {/* <!-- Experience and education --> */}
               <div className="bg-white p-3 shadow-sm rounded-sm">
-                <div className="grid grid-cols-2">
+                <div className="grid grid-cols-1">
                   <div>
                     <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
                       <span className="text-green-500">
@@ -95,49 +111,64 @@ const User = ({ match }: RouteComponentProps<UserParams>) => {
                           stroke="currentColor"
                         >
                           <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
                             d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                           />
                         </svg>
                       </span>
-                      <span className="tracking-wide">Experience</span>
+                      <span className="tracking-wide">
+                        Published benchmarks
+                      </span>
                     </div>
-                    <ul className="list-inside space-y-2">
-                      <li>
-                        <div className="text-teal-600">
-                          Owner at Her Company Inc.
+                    <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                      <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                        <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                          <table className="min-w-full divide-y divide-gray-200">
+                            <thead className="bg-gray-50 dark:bg-gray-800">
+                              <tr>
+                                <th
+                                  scope="col"
+                                  className="dark:text-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                >
+                                  Title
+                                </th>
+                                <th
+                                  scope="col"
+                                  className="dark:text-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                >
+                                  Subject
+                                </th>
+                                <th
+                                  scope="col"
+                                  className="dark:text-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                >
+                                  Difficulty
+                                </th>
+                                <th
+                                  scope="col"
+                                  className="dark:text-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                >
+                                  Creator
+                                </th>
+                                <th scope="col" className="relative px-6 py-3">
+                                  <span className="sr-only">View</span>
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody className="bg-white dark:bg-gray-300 divide-y divide-gray-200">
+                              {benchmarks.map((benchmark: benchmarkModel) => (
+                                <BenchmarkRow
+                                  key={benchmark.id?.toString()}
+                                  benchmark={benchmark}
+                                />
+                              ))}
+                            </tbody>
+                          </table>
                         </div>
-                        <div className="text-gray-500 text-xs">
-                          March 2020 - Now
-                        </div>
-                      </li>
-                      <li>
-                        <div className="text-teal-600">
-                          Owner at Her Company Inc.
-                        </div>
-                        <div className="text-gray-500 text-xs">
-                          March 2020 - Now
-                        </div>
-                      </li>
-                      <li>
-                        <div className="text-teal-600">
-                          Owner at Her Company Inc.
-                        </div>
-                        <div className="text-gray-500 text-xs">
-                          March 2020 - Now
-                        </div>
-                      </li>
-                      <li>
-                        <div className="text-teal-600">
-                          Owner at Her Company Inc.
-                        </div>
-                        <div className="text-gray-500 text-xs">
-                          March 2020 - Now
-                        </div>
-                      </li>
-                    </ul>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 {/* <!-- End of Experience and education grid --> */}
