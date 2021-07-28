@@ -21,12 +21,7 @@ const User = ({ match }: RouteComponentProps<UserParams>) => {
   } = useUser(match.params.id);
 
   let benchmarks: benchmarkModel[] = [];
-  const {
-    isLoading: isBenchmarksLoading,
-    isError: isBenchmarksError,
-    data: benchmarksData,
-    error: benchmarksError,
-  } = useBenchmarksForUser(match.params.id);
+  const { data: benchmarksData } = useBenchmarksForUser(match.params.id);
 
   if (isProfileLoading) {
     return <span>Loading....</span>;
