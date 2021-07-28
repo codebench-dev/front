@@ -7,7 +7,7 @@ import useDarkMode from 'use-dark-mode';
 import { useToken } from '../../hooks/token';
 import useProfile from '../../hooks/users';
 
-const navigation = ['Benchmarks'];
+const navigation = ['Benchmarks', 'Rules'];
 const profile = ['Your Profile', 'Settings', 'Sign out'];
 
 export default function Navbar() {
