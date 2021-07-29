@@ -19,4 +19,5 @@ The project was bootstraped by [react-start-app](https://github.com/facebook/cre
 ## Screenshots
 
 ![](./assets/header.png)
+
 ![](./assets/editor.png)
